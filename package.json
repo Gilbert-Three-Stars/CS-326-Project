@@ -27,5 +27,8 @@
       "email": "email@example.com",
       "github": "github-username"
     }
+  },
+  "scripts": {
+    "prettier": "prettier src --write"
   }
 }
