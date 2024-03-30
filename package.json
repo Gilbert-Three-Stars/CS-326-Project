@@ -32,6 +32,12 @@
       "email": "abentahar@umass.edu",
       "github": "Moroccanoid"
     }
+    ,
+    "team_member4": {
+      "name": "Yunis Egal",
+      "email": "yegal@umass.edu",
+      "github": "ye-190"
+    }
   },
   "scripts": {
     "prettier": "prettier src --write"
