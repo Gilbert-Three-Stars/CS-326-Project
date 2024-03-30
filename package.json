@@ -7,4 +7,6 @@
   "dependencies": {
     "git": "^0.1.5"
   }
+  ,
+  "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s"
 }
