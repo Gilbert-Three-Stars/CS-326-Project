@@ -10,5 +10,22 @@
   ,
   "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s"
   ,
-  "validate-html": "html-validate 'src/**/*.html'"
+  "validate-html": "html-validate 'src/**/*.html'",
+  
+  "author": {
+    "name": "Team Typing Game"
+  },
+  "url": "https://github.com/Gilbert-Three-Stars/CS-326-Project",
+  "collaborators": {
+    "team_member1": {
+      "name": "Trong Vo",
+      "email": "tsvo@umass.com",
+      "github": "github-username"
+    },
+    "team_member2": {
+      "name": "Full Name",
+      "email": "email@example.com",
+      "github": "github-username"
+    }
+  }
 }
