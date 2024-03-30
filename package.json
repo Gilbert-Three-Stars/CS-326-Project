@@ -26,6 +26,11 @@
       "name": "Gilbert Three Stars",
       "email": "gthreestars@umass.edu",
       "github": "Gilbert-Three-Stars"
+    },
+    "team_member3": {
+      "name": "Yunis Egal",
+      "email": "yegal@umass.edu",
+      "github": "ye-190"
     }
   },
   "scripts": {
