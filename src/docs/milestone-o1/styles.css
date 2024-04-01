@@ -10,10 +10,17 @@ header {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
 }
-p {
-    font-size: 16px;
-    color: #333;
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
 }
+.team-member p {
+    max-width: 60%; 
+    font-size: 16px;
+}
+
 nav{
     text-align: center;
     background-color: rgb(0, 38, 255);
@@ -30,16 +37,8 @@ nav a:hover{
     color: red
 }
 
-#overview {
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-}
 .button {
     background-color: rgb(0, 89, 255);
     color: white;
+}
 
-}
-a:hover {
-    color: rgb(0, 89, 255);
-}
