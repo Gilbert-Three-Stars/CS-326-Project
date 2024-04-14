@@ -1,213 +1,344 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document Title</title>
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <!-- JavaScript Files -->
     <script type="module" src="script.js" defer></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <main>
-        <!-- Main content of the document -->
-        <article>
-            <!-- Primary content like a blog post or article -->
-        </article>
-        <header id="vision">
-            <h1> Cultivating Fingers: Improve Typing While Having Fun!</h1>
-        </header>
-        <nav>
-            <!-- Links to different sections/pages -->
-            <a href = "#team"> Team </a>
-            <a href = "#overview"> Overview </a>
-            <a href = "#application-parts"> Application </a>
-            <a href = "#data-requirements"> Data Requirements </a>
-            <a href = "#wire-frames">Wire Frames </a>
-            <a href = "#real-world"> Real World </a>
-            <a href = "#integrative-experience"> Integrative Experience </a>
-            
-        </nav>
+      <!-- Main content of the document -->
+      <article>
+        <!-- Primary content like a blog post or article -->
+      </article>
+      <header id="vision">
+        <h1>Cultivating Fingers: Improve Typing While Having Fun!</h1>
+      </header>
+      <nav>
+        <!-- Links to different sections/pages -->
+        <a href="#team"> Team </a>
+        <a href="#overview"> Overview </a>
+        <a href="#application-parts"> Application </a>
+        <a href="#data-requirements"> Data Requirements </a>
+        <a href="#wire-frames">Wire Frames </a>
+        <a href="#real-world"> Real World </a>
+        <a href="#integrative-experience"> Integrative Experience </a>
+      </nav>
 
-        <section id="team">
-            <!-- Related content or subsections -->
-            <h2>Meet the Team</h2>
-            <div class = "team-grid">
-                <div class="team-member">
-                    <img src="./IMG_0473.PNG" alt="Team Member 1" width="200" height="200">
-                    <h3>Trong Vo</h3>
-                    <p>My name is Trong Vo and I am pursuing a computer science degree. 
-                        I love Computer Science. I have experience coding in Java, Javascript, and C. 
-                        I want to be the greatest Web Dev.</p>
-                    
-                </div>
-                
-                <div class="team-member">
-                    <img src="./Gilbert.png" alt="Team Member 2" width="200" height="200">
-                    <h3>Gilbert Three Stars</h3>
-                    <p>My name is Gilbert Three Stars and I have experience writing in Javascript and using Github from CS 220. 
-                        I don't have much experience with version control or css/html, so I am excited to develop my skills in these aspects. 
-                        I have always enjoyed web applications that measure your typing speed, so I am excited to put my own spin on one of these web applications.</p>
-                </div>
-                <div class="team-member">
-                    <img src="./1685372660349.jpeg" alt="Team Member 3" width="200" height="200">
-                    <h3>Adam Bentahar</h3>
-                    <p>I am Adam Bentahar, I like typing programs for fun and using coursework to improve my coding skills. 
-                        Much of my coding experience is derived from Data Structures, CS 220/230, and AI. 
-                        I have lots of experience working with teams and group environments so I think I can bring some insight in forming a cohesive group.</p>
-                        
-                </div>
-                <div class="team-member">
-                    <img src="./YunisPicture.jpg" alt="Team Member 4" width="200" height="200">
-                    <h3>Yunis Egal</h3>
-                    <p>My name is Yunis Egal and I am very passionate about computer science. I love loops especially while loops. I am looking to get a software engineer job after college. 
-                    I have a lot of siblings that I love very much. I have experience in Javascript and C. My greatest strength is that I am always willing to learn. 
-                    My weakness is that I have trouble keeping a deadline. </p>
-                    
-                </div>
-            </div>
-        </section>
-        <section id="overview">
-            <h2>Overview</h2>
-            <p>For our web application, we seek to develop a typing game where you type a piece of text and the application tells you your typing speed in words per minute. 
-                Typing has quickly become one of the most important and fundamental skills in the modern world. 
-                By creating a game that measures your typing speed, we seek to improve the user's typing ability in a way           	
-                that is both engaging and simple. For our target audience, we seek to create a web application that is fun and simple to use 
-                for anyone who wishes to learn how to type or wishes to improve their typing speed. With this in mind, it is important to create a user interface 
-                that is both simple and intuitive, as those with little typing experience would be more likely to have little experience in the way of navigating through web pages.
-            </p>
-        </section>
-        <section id="application-parts">
-            <h2>Application Parts</h2>
+      <section id="team">
+        <!-- Related content or subsections -->
+        <h2>Meet the Team</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="./IMG_0473.PNG"
+              alt="Team Member 1"
+              width="200"
+              height="200"
+            />
+            <h3>Trong Vo</h3>
             <p>
-                The word per minute counter is an integral part of our typing game. We want to create 
-                a counter that updates while the user is typing in real time. This will allow the user 
-                to see if they are slowing up or speeding down while typing a piece of text. 
-                After the user has finished typing, the word per minute counter will display words per minute 
-                that they achieved for the duration of the entire piece of text. This feature will allow users 
-                to track their progress and see how they are improving in a way that is straightforward and easy 
-                to comprehend. Additionally, the counter updating in real time will provide a way for users to 
-                see what areas of text provide them with the most difficulty.
+              My name is Trong Vo and I am pursuing a computer science degree. I
+              love Computer Science. I have experience coding in Java,
+              Javascript, and C. I want to be the greatest Web Dev.
             </p>
+          </div>
+
+          <div class="team-member">
+            <img
+              src="./Gilbert.png"
+              alt="Team Member 2"
+              width="200"
+              height="200"
+            />
+            <h3>Gilbert Three Stars</h3>
             <p>
-                Another feature of our typing game is the piece of text that the user is currently copying from. 
-                The text that the user has already finished typing should be highlighted in color to show the user 
-                what portion of the text they have already completed, as well as showing the user where they are 
-                currently in the piece of text. Additionally, mistakes should be highlighted in a different color 
-                to show the user what they need to correct. This feature allows the user to assess the accuracy of 
-                their typing.
+              My name is Gilbert Three Stars and I have experience writing in
+              Javascript and using Github from CS 220. I don't have much
+              experience with version control or css/html, so I am excited to
+              develop my skills in these aspects. I have always enjoyed web
+              applications that measure your typing speed, so I am excited to
+              put my own spin on one of these web applications.
             </p>
+          </div>
+          <div class="team-member">
+            <img
+              src="./1685372660349.jpeg"
+              alt="Team Member 3"
+              width="200"
+              height="200"
+            />
+            <h3>Adam Bentahar</h3>
             <p>
-                Our web application will also display a plot that charts the progression of the user as they become 
-                more proficient and their words per minute increases. This will encourage and enable the user to set 
-                meaningful and concrete goals for themselves and their typing improvement.
+              I am Adam Bentahar, I like typing programs for fun and using
+              coursework to improve my coding skills. Much of my coding
+              experience is derived from Data Structures, CS 220/230, and AI. I
+              have lots of experience working with teams and group environments
+              so I think I can bring some insight in forming a cohesive group.
             </p>
+          </div>
+          <div class="team-member">
+            <img
+              src="./YunisPicture.jpg"
+              alt="Team Member 4"
+              width="200"
+              height="200"
+            />
+            <h3>Yunis Egal</h3>
             <p>
-                To further encourage an improvement mindset in the user, the web application will also have an area 
-                where you can set goals for yourself. For this component, the user selects a word per minute average 
-                that they want to achieve over a specified number of texts. After completing the specified number of texts, 
-                this component will notify the user if they have met or failed to meet their goal.
+              My name is Yunis Egal and I am very passionate about computer
+              science. I love loops especially while loops. I am looking to get
+              a software engineer job after college. I have a lot of siblings
+              that I love very much. I have experience in Javascript and C. My
+              greatest strength is that I am always willing to learn. My
+              weakness is that I have trouble keeping a deadline.
             </p>
-        </section>
-        <section id = "wire-frames">
-            <h2> Wire Frames</h2>
-            <img src="./Screenshot 2024-04-02 232101.png" alt="frame 1">
-            <p> Our first wire-frame will show what our page will look like in the beginning. There will be 3 links you can choose from, either to check your stats, to start practicing and typing or to view the goals
-                for the next couple of texts. We will also have the name of our web application in this wire-frame. </p> 
-            <img src="./Screenshot 2024-04-02 230902.png" alt="frame 2">
-            <p> Our next wire-frame will have the text-box we are inputting our words into. We will be writing what the Wikipedia article is showcasing to us. There will be four different tags around this page, such as our WPMs that dynamically updates, our accurate
-                rate so far, to restart this text again, or to completely start anew from another text. </p>
-            <img src="./Screenshot 2024-04-02 231128.png" alt="frame 3">
-            <p> Our next wire-frame will be on our stats. It will showcase our average WPMs as well as our average accuracy. In addition, there will be two different graphs shown, such as our total typing history. The total typing history will showcase the ratio between
-                number of texts typed and words per minute. Thus, our performance overtime will be easy to notice. Our other graph will be plotted data points on last ten texts typed. It will show the number of words per minute for each of these texts to give a more specific
-                understanding of our user's performance in the last ten rounds. </p>
-            <img src="./Screenshot 2024-04-02 232204.png" alt="frame 4">
-            <p> Our last wire-frame will be on our Goals. We can input or words per minute goal for a specified number of texts. We can also see our previous goals that will be color-coded. Green for a successful goal and red for failure. </p>
-        </section>
-        
-        
-        <section id = "data-requirements">
-            <h2> Data Requirements</h2>
-           <p> Our web application places a good focus on the user data, and we plan to store and use statistics effectively to enhance typing proficiency. 
-              Our first data requirement will be to track typing speed, that will provide our user with a clear measure of their performance in terms of words typed per minute (WPM). 
-              After this, we plan to show the user their accuracy rate, which monitors the ratio of correctly typed words to the total number of words typed throughout the text. 
-              We also plan to analyze error rates, highlighting the frequency of misspelled words to show areas requiring improvement. </p>
-            <p> Additionally, we will have performance tracking, offering detailed insight on users' progress across various texts. 
-                This feature not only highlights improvements but also identifies areas necessitating further practice and suggests areas for enhancement. 
-                Not to mention, our application has user-set goals, allowing the user to define specific objectives, such as achieving a targeted WPM accuracy within a set number of texts. 
-                Upon reaching these goals, users receive notifications such as a pop-up, that will help them stay engaged on their improvements. </p>
-            <p> In addition, our next data requirement is to help users hone their typing abilities by tracking inaccurate keystrokes and logging that info for further use. 
-                By using that data on commonly mistyped letters, we will show a comprehensive heat map visualization that shows the areas where users encounter the most challenges and difficulty. 
-                This representation identifies specific keys prone to errors but also provides valuable insights into typing patterns and habits. 
-                Users can use this information to plan targeted strategies for improvement, such as focusing on specific letter combinations or practicing particular typing techniques. 
-                Also, the heat map will change as users engage in typing exercises, allowing for real-time feedback and becoming more efficient with their typing level.
-                 Ultimately, this feature helps users refine their skills with precision and efficiency, guiding them towards mastery in typing accuracy and fluency. </p>
-            <p> Lastly, our data requirement offers a selection of texts sourced from Wikipedia articles. These texts encompass a diverse range of topics, exposing users 
-                to various vocabulary and writing styles to provide a unique and expanded learning experience. By typing these texts, users can familiarize themselves with different word structures and contexts, 
-                enhancing their typing proficiency. </p>
-            <p>  In conclusion, our web application is committed to using user typing data to show tailored feedback, personalized goal-setting, and user specific practice materials, all for fostering continuous improvement in typing skills. 
-                Through these comprehensive features, users can track their progress, address weaknesses, and ultimately achieve greater proficiency and confidence in typing tasks. </p>
-        </section>
-        <section id="real-world">
-            <h2>Real-World Connection</h2>
-            <p>
-                In today's digital age, typing has become an essential skill, crucial for effective communication and productivity. 
-                However, access to quality typing education and resources remains a challenge, particularly for underserved communities. 
-                Our web application, a typing game designed to improve typing speed and accuracy, directly addresses this issue by providing 
-                a fun and engaging platform for learning.
-            </p>
-            <p>
-                This web application was designed to provide high-quality, free, and unrestricted access to educational resources 
-                to underserved communities. Our solution looks to provide a free and accesible tool for anyone who seeks to improve 
-                their typing skills. By providing a platform that measures and improves typing skills, we empower users to improve their 
-                proficiency over time. This is extremely beneficial for individuals with limited access to traditional typing classes and software.
-            </p>
-            <p>
-                Like an educational platform, our typing game bridges the gap in typing skills by providing a resource that is both engaging
-                and easy to use. With a simple and intuitive interface, our game is accessible to individuals with varying levels of typing
-                experience, ensuring that everyone, regardless of their background or experience, can benefit from improved typing skills.
-            </p>
-            <p>
-                Conclusively, our game was not made just to help learners type faster; it's about providing an equal opportunity for everyone
-                to acquire a vital skill in today's digital world. By offering a free and accessible platform, we contribute to educational
-                equity and access, empowering students to communicate more effectively and participate more fully in the digital age.
-            </p>
-        </section>
-        <section id="integrative-experience">
-            <h2>Integrative Experience</h2>
-            <p>
-               The Integrative Experience requirement is as an important aspect for us, since it connects fragmented aspects of our undergraduate journey
-               into a cohesive whole. All together in the development of a typing game, our project represents the connection between our education, personal growth,
-               and other life experiences. 
-            </p>
-            <p>
-                Throughout our academic journey, we took courses in computer science such as data structures, programming methodologies, and web development which have provided
-                us with the technical foundation necessary to undertake this goal and project. Using the hours invested into learning and practicing languages like
-                JavaScript, HTML, and CSS have taught us the necessary skills to design and implement interactive web applications, that are helpful for creating
-                our typing game. Our coursework in user interface design has shown and taught us the way of creating engaging and intuitive user experiences, 
-                in addition to being crucial for the success of the application.
-            </p>
-            <p>
-                Furthermore, the team's experiences in coding competitions and research have honed each member's respective problem-solving skills and fostered a
-                collaborative team. These experiences have been helpful in shaping our approach to this project, teaching us the importance of teamwork and
-                innovation in achieving our goals.
-            </p>
-            <p>
-                In conclusion, this project aims to represent the complete learning and practical skills of our academic journey, blending technical knowledge with personal growth. This unique integration
-                of knowledge and skills developed over the course of our undergraduate experience symbolizes its culmination. This application strives to not only fulfill the Integrative
-                Experience, but to demonstrate the variety of skills and insights we have gained. It serves as a testament to our ability to think critically, collaborate efficiently,
-                and innovate creatively.
-            </p>
-        </section>
-        <aside>
-            <!-- Side content like ads, links to other posts, or author info -->
-        </aside>
+          </div>
+        </div>
+      </section>
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          For our web application, we seek to develop a typing game where you
+          type a piece of text and the application tells you your typing speed
+          in words per minute. Typing has quickly become one of the most
+          important and fundamental skills in the modern world. By creating a
+          game that measures your typing speed, we seek to improve the user's
+          typing ability in a way that is both engaging and simple. For our
+          target audience, we seek to create a web application that is fun and
+          simple to use for anyone who wishes to learn how to type or wishes to
+          improve their typing speed. With this in mind, it is important to
+          create a user interface that is both simple and intuitive, as those
+          with little typing experience would be more likely to have little
+          experience in the way of navigating through web pages.
+        </p>
+      </section>
+      <section id="application-parts">
+        <h2>Application Parts</h2>
+        <p>
+          The word per minute counter is an integral part of our typing game. We
+          want to create a counter that updates while the user is typing in real
+          time. This will allow the user to see if they are slowing up or
+          speeding down while typing a piece of text. After the user has
+          finished typing, the word per minute counter will display words per
+          minute that they achieved for the duration of the entire piece of
+          text. This feature will allow users to track their progress and see
+          how they are improving in a way that is straightforward and easy to
+          comprehend. Additionally, the counter updating in real time will
+          provide a way for users to see what areas of text provide them with
+          the most difficulty.
+        </p>
+        <p>
+          Another feature of our typing game is the piece of text that the user
+          is currently copying from. The text that the user has already finished
+          typing should be highlighted in color to show the user what portion of
+          the text they have already completed, as well as showing the user
+          where they are currently in the piece of text. Additionally, mistakes
+          should be highlighted in a different color to show the user what they
+          need to correct. This feature allows the user to assess the accuracy
+          of their typing.
+        </p>
+        <p>
+          Our web application will also display a plot that charts the
+          progression of the user as they become more proficient and their words
+          per minute increases. This will encourage and enable the user to set
+          meaningful and concrete goals for themselves and their typing
+          improvement.
+        </p>
+        <p>
+          To further encourage an improvement mindset in the user, the web
+          application will also have an area where you can set goals for
+          yourself. For this component, the user selects a word per minute
+          average that they want to achieve over a specified number of texts.
+          After completing the specified number of texts, this component will
+          notify the user if they have met or failed to meet their goal.
+        </p>
+      </section>
+      <section id="wire-frames">
+        <h2>Wire Frames</h2>
+        <img src="./Screenshot 2024-04-02 232101.png" alt="frame 1" />
+        <p>
+          Our first wire-frame will show what our page will look like in the
+          beginning. There will be 3 links you can choose from, either to check
+          your stats, to start practicing and typing or to view the goals for
+          the next couple of texts. We will also have the name of our web
+          application in this wire-frame.
+        </p>
+        <img src="./Screenshot 2024-04-02 230902.png" alt="frame 2" />
+        <p>
+          Our next wire-frame will have the text-box we are inputting our words
+          into. We will be writing what the Wikipedia article is showcasing to
+          us. There will be four different tags around this page, such as our
+          WPMs that dynamically updates, our accurate rate so far, to restart
+          this text again, or to completely start anew from another text.
+        </p>
+        <img src="./Screenshot 2024-04-02 231128.png" alt="frame 3" />
+        <p>
+          Our next wire-frame will be on our stats. It will showcase our average
+          WPMs as well as our average accuracy. In addition, there will be two
+          different graphs shown, such as our total typing history. The total
+          typing history will showcase the ratio between number of texts typed
+          and words per minute. Thus, our performance overtime will be easy to
+          notice. Our other graph will be plotted data points on last ten texts
+          typed. It will show the number of words per minute for each of these
+          texts to give a more specific understanding of our user's performance
+          in the last ten rounds.
+        </p>
+        <img src="./Screenshot 2024-04-02 232204.png" alt="frame 4" />
+        <p>
+          Our last wire-frame will be on our Goals. We can input or words per
+          minute goal for a specified number of texts. We can also see our
+          previous goals that will be color-coded. Green for a successful goal
+          and red for failure.
+        </p>
+      </section>
+
+      <section id="data-requirements">
+        <h2>Data Requirements</h2>
+        <p>
+          Our web application places a good focus on the user data, and we plan
+          to store and use statistics effectively to enhance typing proficiency.
+          Our first data requirement will be to track typing speed, that will
+          provide our user with a clear measure of their performance in terms of
+          words typed per minute (WPM). After this, we plan to show the user
+          their accuracy rate, which monitors the ratio of correctly typed words
+          to the total number of words typed throughout the text. We also plan
+          to analyze error rates, highlighting the frequency of misspelled words
+          to show areas requiring improvement.
+        </p>
+        <p>
+          Additionally, we will have performance tracking, offering detailed
+          insight on users' progress across various texts. This feature not only
+          highlights improvements but also identifies areas necessitating
+          further practice and suggests areas for enhancement. Not to mention,
+          our application has user-set goals, allowing the user to define
+          specific objectives, such as achieving a targeted WPM accuracy within
+          a set number of texts. Upon reaching these goals, users receive
+          notifications such as a pop-up, that will help them stay engaged on
+          their improvements.
+        </p>
+        <p>
+          In addition, our next data requirement is to help users hone their
+          typing abilities by tracking inaccurate keystrokes and logging that
+          info for further use. By using that data on commonly mistyped letters,
+          we will show a comprehensive heat map visualization that shows the
+          areas where users encounter the most challenges and difficulty. This
+          representation identifies specific keys prone to errors but also
+          provides valuable insights into typing patterns and habits. Users can
+          use this information to plan targeted strategies for improvement, such
+          as focusing on specific letter combinations or practicing particular
+          typing techniques. Also, the heat map will change as users engage in
+          typing exercises, allowing for real-time feedback and becoming more
+          efficient with their typing level. Ultimately, this feature helps
+          users refine their skills with precision and efficiency, guiding them
+          towards mastery in typing accuracy and fluency.
+        </p>
+        <p>
+          Lastly, our data requirement offers a selection of texts sourced from
+          Wikipedia articles. These texts encompass a diverse range of topics,
+          exposing users to various vocabulary and writing styles to provide a
+          unique and expanded learning experience. By typing these texts, users
+          can familiarize themselves with different word structures and
+          contexts, enhancing their typing proficiency.
+        </p>
+        <p>
+          In conclusion, our web application is committed to using user typing
+          data to show tailored feedback, personalized goal-setting, and user
+          specific practice materials, all for fostering continuous improvement
+          in typing skills. Through these comprehensive features, users can
+          track their progress, address weaknesses, and ultimately achieve
+          greater proficiency and confidence in typing tasks.
+        </p>
+      </section>
+      <section id="real-world">
+        <h2>Real-World Connection</h2>
+        <p>
+          In today's digital age, typing has become an essential skill, crucial
+          for effective communication and productivity. However, access to
+          quality typing education and resources remains a challenge,
+          particularly for underserved communities. Our web application, a
+          typing game designed to improve typing speed and accuracy, directly
+          addresses this issue by providing a fun and engaging platform for
+          learning.
+        </p>
+        <p>
+          This web application was designed to provide high-quality, free, and
+          unrestricted access to educational resources to underserved
+          communities. Our solution looks to provide a free and accesible tool
+          for anyone who seeks to improve their typing skills. By providing a
+          platform that measures and improves typing skills, we empower users to
+          improve their proficiency over time. This is extremely beneficial for
+          individuals with limited access to traditional typing classes and
+          software.
+        </p>
+        <p>
+          Like an educational platform, our typing game bridges the gap in
+          typing skills by providing a resource that is both engaging and easy
+          to use. With a simple and intuitive interface, our game is accessible
+          to individuals with varying levels of typing experience, ensuring that
+          everyone, regardless of their background or experience, can benefit
+          from improved typing skills.
+        </p>
+        <p>
+          Conclusively, our game was not made just to help learners type faster;
+          it's about providing an equal opportunity for everyone to acquire a
+          vital skill in today's digital world. By offering a free and
+          accessible platform, we contribute to educational equity and access,
+          empowering students to communicate more effectively and participate
+          more fully in the digital age.
+        </p>
+      </section>
+      <section id="integrative-experience">
+        <h2>Integrative Experience</h2>
+        <p>
+          The Integrative Experience requirement is as an important aspect for
+          us, since it connects fragmented aspects of our undergraduate journey
+          into a cohesive whole. All together in the development of a typing
+          game, our project represents the connection between our education,
+          personal growth, and other life experiences.
+        </p>
+        <p>
+          Throughout our academic journey, we took courses in computer science
+          such as data structures, programming methodologies, and web
+          development which have provided us with the technical foundation
+          necessary to undertake this goal and project. Using the hours invested
+          into learning and practicing languages like JavaScript, HTML, and CSS
+          have taught us the necessary skills to design and implement
+          interactive web applications, that are helpful for creating our typing
+          game. Our coursework in user interface design has shown and taught us
+          the way of creating engaging and intuitive user experiences, in
+          addition to being crucial for the success of the application.
+        </p>
+        <p>
+          Furthermore, the team's experiences in coding competitions and
+          research have honed each member's respective problem-solving skills
+          and fostered a collaborative team. These experiences have been helpful
+          in shaping our approach to this project, teaching us the importance of
+          teamwork and innovation in achieving our goals.
+        </p>
+        <p>
+          In conclusion, this project aims to represent the complete learning
+          and practical skills of our academic journey, blending technical
+          knowledge with personal growth. This unique integration of knowledge
+          and skills developed over the course of our undergraduate experience
+          symbolizes its culmination. This application strives to not only
+          fulfill the Integrative Experience, but to demonstrate the variety of
+          skills and insights we have gained. It serves as a testament to our
+          ability to think critically, collaborate efficiently, and innovate
+          creatively.
+        </p>
+      </section>
+      <aside>
+        <!-- Side content like ads, links to other posts, or author info -->
+      </aside>
     </main>
 
     <footer>
-        <!-- Footer content like copyright, links to privacy policy, etc. -->
+      <!-- Footer content like copyright, links to privacy policy, etc. -->
     </footer>
-</body>
+  </body>
 </html>
