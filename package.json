@@ -40,7 +40,7 @@
     }
   },
   "scripts": {
-    "start": "http-server src -p 3000 -c-1 -o -s",
+    "start": "http-server src/client -p 3000 -c-1 -o -s",
     "prettier": "prettier src --write",
     "milestone-01": "http-server src -p 3000 -c-1 -o -s",
     "validate-html": "html-validate src/**/*.html",  
