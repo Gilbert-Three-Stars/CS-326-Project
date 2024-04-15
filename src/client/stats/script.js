@@ -1,8 +1,7 @@
 // import * as db from "../db.js";
 
-/**loads the graphs on the stats page
-*
-* @param {Element} element - The DOM element to render the stats. 
+/**loads the stats on the stats page
+@param {Element} element - The DOM element to render the stats. 
 */
 async function loadStats(){
     const stats = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
@@ -21,10 +20,16 @@ async function loadStats(){
 
 }
 
-function createChart(id, type, data, ){
+/**loads the graphs on the stats page
+@param {string} id - The id of the DOM element to render the charts
+@param {string} chartType - the type of chart to make
+@param {string} chartTime - the time range of the data
+@param {object} data - the data of the charts
+*/
+function createChart(id,chartType, data, chartTime){
     const ctx = document.getElementById(id);
     const chart = new Chart(ctx, {
-        type: type,
+        type: chartType,
         data: {
             labels: data.labels,
             datasets: data.datasets,
