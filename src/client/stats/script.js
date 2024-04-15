@@ -57,7 +57,7 @@ let isLoggedIn = false;
 
 //if user is logged in
 //if(loggedIn){code below}
-let data1 = {
+let wpm = {
     labels: ["Jan","Feb","March","April","May","June"],
     datasets: [{
       label: 'Words Per Minute',
@@ -65,7 +65,7 @@ let data1 = {
       borderWidth: 1
     }]
 };
-let data2 = {
+let acc = {
     labels: ["Jan","Feb","March","April","May","June"],
     datasets: [{
       label: 'Accuracy %',
@@ -73,9 +73,18 @@ let data2 = {
       borderWidth: 1
     }]
 };
+let keys = {
+    labels: ["a","b","c","d","e","f"],
+    datasets: [{
+      label: 'Keys Missed',
+      data: [10,4,14,7,15,9],
+      borderWidth: 1
+    }]
+};
 loadStats()
-createChart("wpm","line",data1);
-createChart("acc","line",data2);
+createChart("wpm","line",wpm);
+createChart("acc","line",acc);
+createChart("keys","bar",keys);
 
 const dayButton = document.getElementById("day");
 const weekButton = document.getElementById("week");
