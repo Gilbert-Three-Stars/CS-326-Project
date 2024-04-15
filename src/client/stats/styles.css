@@ -1,5 +1,6 @@
 body{
     background-color: #333;
+    font-family: "Lato", sans-serif;
 }
 .navbar {
     background-color: #333; 
@@ -59,7 +60,6 @@ body{
     width: 150px;
     border: 1px solid black;
     text-transform: uppercase;
-    font-family: Garamond;
     background-color: #272727;
     display: flex;
     align-items: center;

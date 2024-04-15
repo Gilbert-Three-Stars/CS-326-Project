@@ -19,9 +19,9 @@ export class UserDB{
   }
 
   //load data
-  async  load(name) {
-    const counter = await this.#db.get(name);
-    return counter;
+  async load(name) {
+    const data = await this.#db.get(name);
+    return data;
   }
   //removes data
   async remove(name) {

@@ -1,3 +1,8 @@
+body{
+    background-color: #333;
+    font-family: "Lato", sans-serif;
+}
+
 .navbar {
     background-color: #333; 
     overflow: hidden;
