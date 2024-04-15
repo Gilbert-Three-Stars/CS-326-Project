@@ -21,8 +21,35 @@ async function loadStats(){
 
 }
 
+function createChart(id, type, data, ){
+    const ctx = document.getElementById('chart');
+    const chart = new Chart(ctx, {
+        type: type,
+        data: {
+            labels: data.labels,
+            datasets: data.datasets,
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+}
+
+let isLoggedIn = false;
 
 //if user is logged in
 //if(loggedIn){code below}
-
+let data = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+};
 loadStats()
+createChart("chart","bar",data);
