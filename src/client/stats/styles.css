@@ -89,20 +89,8 @@ body{
     color: #272727;
 }
 
-/* .button {
-    margin: 0 5px; /* Adjust as needed 
-    background-color: black; /* Set background color 
-    color: white; /* Set text color 
-    border: none; /* Remove border 
-    padding: 15px 30px; /* Set padding 
-    font-size: 18px; /* Set font size 
-    cursor: pointer; /* Change cursor to pointer on hover 
-    border-radius: 10px; /* Add some border radius for rounded corners 
-  }
 
-*/
-
-#chartDiv{
+.chart{
     justify-content: center;
     align-items: center;
     margin: auto;

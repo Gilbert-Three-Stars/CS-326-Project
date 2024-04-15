@@ -22,7 +22,7 @@ async function loadStats(){
 }
 
 function createChart(id, type, data, ){
-    const ctx = document.getElementById('chart');
+    const ctx = document.getElementById(id);
     const chart = new Chart(ctx, {
         type: type,
         data: {
@@ -39,17 +39,57 @@ function createChart(id, type, data, ){
     });
 }
 
+function flip(element){
+    if(element.value.includes("Last")){
+        element.value = "boo";
+    }
+    else{
+        element.value = "Last Day";
+    }
+}
+
 let isLoggedIn = false;
 
 //if user is logged in
 //if(loggedIn){code below}
-let data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+let data1 = {
+    labels: ["Jan","Feb","March","April","May","June"],
     datasets: [{
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      label: 'Words Per Minute',
+      data: [74,83,89,95,96,101],
+      borderWidth: 1
+    }]
+};
+let data2 = {
+    labels: ["Jan","Feb","March","April","May","June"],
+    datasets: [{
+      label: 'Accuracy %',
+      data: [81,83,90,85,94,95],
       borderWidth: 1
     }]
 };
 loadStats()
-createChart("chart","bar",data);
+createChart("wpm","line",data1);
+createChart("acc","line",data2);
+
+const dayButton = document.getElementById("day");
+const weekButton = document.getElementById("week");
+const monthButton = document.getElementById("month");
+const sixMonthButton = document.getElementById("6month");
+const yearButton = document.getElementById("year");
+
+dayButton.addEventListener("click",()=>{
+    flip(dayButton);
+});
+weekButton.addEventListener("click",()=>{
+
+});
+monthButton.addEventListener("click",()=>{
+
+});
+sixMonthButton.addEventListener("click",()=>{
+
+});
+yearButton.addEventListener("click",()=>{
+
+});
