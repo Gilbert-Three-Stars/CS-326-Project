@@ -21,12 +21,12 @@ async function loadStats(){
 }
 
 /**loads the graphs on the stats page
-@param {string} id - The id of the DOM element to render the charts
+@param {string} id - The id of the chart DOM element to render the charts
 @param {string} chartType - the type of chart to make
 @param {string} chartTime - the time range of the data
 @param {object} data - the data of the charts
 */
-function createChart(id,chartType, data, chartTime){
+function createChart(id,chartType, data, chartTime="all"){
     const ctx = document.getElementById(id);
     const chart = new Chart(ctx, {
         type: chartType,
@@ -44,6 +44,9 @@ function createChart(id,chartType, data, chartTime){
     });
 }
 
+function parseData(data){
+
+}
 function flip(element){
     if(element.value.includes("Last")){
         element.value = "boo";
@@ -77,10 +80,23 @@ let keys = {
     labels: ["a","b","c","d","e","f"],
     datasets: [{
       label: 'Keys Missed',
-      data: [10,4,14,7,15,9],
-      borderWidth: 1
+      data: [10,4,14,7,15,9]
     }]
 };
+
+/*
+let keysData = {
+    a:10, b:4, c:14, d:7, e:15, f:9
+};
+
+let runs = [
+    {
+        date:
+        wpm:
+        acc:
+    },
+]
+*/
 loadStats()
 createChart("wpm","line",wpm);
 createChart("acc","line",acc);
@@ -90,7 +106,7 @@ const dayButton = document.getElementById("day");
 const weekButton = document.getElementById("week");
 const monthButton = document.getElementById("month");
 const sixMonthButton = document.getElementById("6month");
-const yearButton = document.getElementById("year");
+const allButton = document.getElementById("all");
 
 dayButton.addEventListener("click",()=>{
     flip(dayButton);
@@ -104,6 +120,6 @@ monthButton.addEventListener("click",()=>{
 sixMonthButton.addEventListener("click",()=>{
 
 });
-yearButton.addEventListener("click",()=>{
+allButton.addEventListener("click",()=>{
 
 });
