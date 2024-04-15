@@ -1,6 +1,13 @@
 import PouchDB from "pouchdb";
+//TODO if login is implemented, then need to create new object for each user
+const db = new PouchDB("data");
 
-const db = new PouchDB("counters");
+
+// export class UserDB{
+//   constructor(name) {
+
+//   }
+// }
 
 /**
  * Asynchronously saves a new counter to the database with a specified name and
@@ -8,15 +15,15 @@ const db = new PouchDB("counters");
  * overwritten.
  *
  * @async
- * @param {string} name - The unique identifier for the counter.
- * @param {number} count - The initial count value for the counter.
+ * @param {string} name - The unique identifier for the data.
+ * @param {object} data - The data value.
  * @returns {Promise<void>} - A promise that resolves when the counter has been
  * successfully saved.
  * @throws {Error} - Throws an error if the operation fails, e.g., due to
  * database connectivity issues.
  */
-export async function saveCounter(name, count) {
-  await db.put({ _id: name, count });
+export async function save(name, data) {
+  await db.put({ _id: name, data });
 }
 
 /**
@@ -32,7 +39,7 @@ export async function saveCounter(name, count) {
  * @throws {Error} - Throws an error if the operation fails, e.g., the counter
  * does not exist or database issues.
  */
-export async function modifyCounter(doc) {
+export async function modify(doc) {
   await db.put(doc);
 }
 
@@ -45,7 +52,7 @@ export async function modifyCounter(doc) {
  * @throws {Error} - Throws an error if the counter cannot be found or if there
  * is a database issue.
  */
-export async function loadCounter(name) {
+export async function load(name) {
   const counter = await db.get(name);
   return counter;
 }
@@ -60,7 +67,7 @@ export async function loadCounter(name) {
  * @throws {Error} - Throws an error if the counter cannot be removed, e.g., it
  * does not exist or due to database issues.
  */
-export async function removeCounter(name) {
+export async function remove(name) {
   db.remove(name);
 }
 
@@ -73,7 +80,7 @@ export async function removeCounter(name) {
  * @throws {Error} - Throws an error if there is a problem accessing the
  * database.
  */
-export async function loadAllCounters() {
+export async function loadAll() {
   const result = await db.allDocs({ include_docs: true });
   return result.rows.map((row) => row.doc);
 }
