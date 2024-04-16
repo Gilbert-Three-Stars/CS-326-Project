@@ -5,13 +5,11 @@
     "prettier": "^3.2.5"
   },
   "dependencies": {
-    "git": "^0.1.5"
-  }
-  ,
-  "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s"
-  ,
+    "git": "^0.1.5",
+    "pouchdb": "^8.0.1"
+  },
+  "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
   "validate-html": "html-validate 'src/**/*.html'",
-  
   "author": {
     "name": "Team Typing Game"
   },
@@ -31,8 +29,7 @@
       "name": "Adam Bentahar",
       "email": "abentahar@umass.edu",
       "github": "Moroccanoid"
-    }
-    ,
+    },
     "team_member4": {
       "name": "Yunis Egal",
       "email": "yegal@umass.edu",
@@ -43,7 +40,7 @@
     "start": "http-server src -p 3000 -c-1 -o -s",
     "prettier": "prettier src --write",
     "milestone-01": "http-server src -p 3000 -c-1 -o -s",
-    "validate-html": "html-validate src/**/*.html",  
+    "validate-html": "html-validate src/**/*.html",
     "milestone-02": "http-server src -p 3000 -c-1 -o -s"
   }
 }

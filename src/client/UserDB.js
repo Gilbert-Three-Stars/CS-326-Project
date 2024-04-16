@@ -1,4 +1,4 @@
-import PouchDB from "pouchdb";
+// import { PouchDB } from 'pouchdb'
 
 export class UserDB{
 
@@ -24,12 +24,13 @@ export class UserDB{
     return data;
   }
   //removes data
-  async remove(name) {
-    this.#db.remove(name);
+  async delete(name) {
+    let doc = await this.load(name);
+    this.#db.remove(doc);
   }
-  // async loadAll() {
-  //   const result = await db.allDocs({ include_docs: true });
-  //   return result.rows.map((row) => row.doc);
-  // }
+  async loadAll() {
+    const result = await this.#db.allDocs({ include_docs: true });
+    return result.rows.map((row) => row.doc);
+  }
 }
 

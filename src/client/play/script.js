@@ -19,6 +19,9 @@ ideally there should be a DOM element that we can extract the username from
 which means,
 let db = new UserDB(username)
 
+usernames are unique. calling new UserName(username) in another file will share 
+the same data. 
+
 all the functions are async
 
 data can be added like

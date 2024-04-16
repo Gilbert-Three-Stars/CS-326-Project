@@ -1,4 +1,4 @@
-// import * as db from "../db.js";
+import {UserDB} from "../UserDB.js";
 
 /**loads the stats on the stats page
 @param {Element} element - The DOM element to render the stats. 
@@ -97,6 +97,8 @@ let runs = [
     },
 ]
 */
+//
+let db = new UserDB("TestUser");
 loadStats()
 createChart("wpm","line",wpm);
 createChart("acc","line",acc);
@@ -123,3 +125,6 @@ sixMonthButton.addEventListener("click",()=>{
 allButton.addEventListener("click",()=>{
 
 });
+
+
+
