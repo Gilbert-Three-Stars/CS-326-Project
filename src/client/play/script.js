@@ -58,26 +58,38 @@ let data = await db.load(name)
 data[property] = something
 await db.modify(data)
 */
-// Function to parse CSV data
-import {fs} from './fs'
 
-// File path of the CSV file
-const filePath = 'example.csv';
 
-// Read the CSV file
-fs.readFile(filePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the file:', err);
-    return;
-  }
-  
-  // Process the CSV data
-  processData(data);
-});
-
-function processData(csv) {
-  // Parse CSV data
-  // For example, using a CSV parsing library like csv-parser
-  // or implement custom parsing logic
-  console.log(csv);
+function generateText(){
+    fetch("quotes.csv")
+    .then(response => response.text())
+    .then(csvText =>{
+        // console.log(JSON.parse(csvText))
+        console.log((csvText))
+    })
+    .catch(error => console.error('Error fetching the CSV file:', error));
 }
+
+function startRound(text){
+
+}
+fetch('quotes.csv')
+  .then(response => response.text())
+  .then(csvText => {
+    const rows = csvText.split('\n');
+
+    // Process CSV data here
+    rows.forEach(row => {
+        const columns = row.split(',');
+        console.log(columns); // Example: Log each row as an array of columns
+    });
+  })
+  .catch(error => console.error('Error fetching the CSV file:', error));
+
+
+// generateText();
+const newTextBtn = document.getElementById("new-text");
+
+newTextBtn.addEventListener("click",()=>{
+    generateText();
+});
