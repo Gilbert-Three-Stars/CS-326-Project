@@ -79,10 +79,15 @@ fetch('quotes.csv')
     const rows = csvText.split('\n');
 
     // Process CSV data here
-    rows.forEach(row => {
-        const columns = row.split(',');
-        console.log(columns); // Example: Log each row as an array of columns
-    });
+    // rows.forEach(row => {
+    //     const columns = row.split(',');
+    //     console.log(columns); // Example: Log each row as an array of columns
+    // });
+    for(let i = 1; i < 20; ++i){
+        let text = rows[i]
+        console.log(text)
+    }
+    // console.log(rows)
   })
   .catch(error => console.error('Error fetching the CSV file:', error));
 

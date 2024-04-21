@@ -4,8 +4,7 @@ body{
 }
 
 .stats-display-container {
-    position: fixed;
-    top: 150px;
+    /* top: 150px; */
     left: 0;
     width: 100%;
     display: flex;
@@ -27,8 +26,6 @@ body{
 }
 
 .bottom-button-container {
-    position: fixed;
-    bottom: 150px;
     left: 0;
     width: 100%;
     display: flex;
@@ -93,12 +90,12 @@ body{
 }
 
 .text-container {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 200px;
-    top: 270px;
+    /* top: 270px; */
 }
 
 #quote-text {
