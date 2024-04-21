@@ -84,3 +84,13 @@ body{
 #enterGoalButton:hover {
     background-color: #45a049;
 }
+
+.current-goal {
+    margin: 0 5px;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
