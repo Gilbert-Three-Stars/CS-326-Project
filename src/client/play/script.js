@@ -55,6 +55,9 @@ textEntry.addEventListener('input', function(event) {
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
 const text = Papa.parse(csvText).data;
+
+// console.log(text[236719])
+
 async function generateText(){
     let randomIndex = Math.floor(Math.random() * text.length);
     return new Promise((resolve, reject) => { resolve(text[randomIndex])});
@@ -63,7 +66,7 @@ async function generateText(){
 async function startRound(){
     restart();
     generateText().then(text=>{
-        quoteText.textContent = text[0];
+        quoteText.textContent = text[0].replace("’","'");
     })
 }
 

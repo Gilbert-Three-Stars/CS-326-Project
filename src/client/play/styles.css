@@ -102,5 +102,7 @@ body{
     color: white;
     background-color: #333;
     padding: 10px;
+    align-items: center;
+    text-align: center;
 }
 
