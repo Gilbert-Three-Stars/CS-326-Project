@@ -1,6 +1,7 @@
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
 
+const accuracyDisplay = document.getElementById('acc');
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
@@ -18,6 +19,23 @@ textEntry.addEventListener("input", () => {
         }
     }
 })
+
+let mistakeMade = 0; 
+textEntry.addEventListener('input', function(event) {
+    const quote = quoteText.textContent.trim();
+    const entry = textEntry.textContent.trim();
+    if (event.inputType === 'deleteContentBackward') {
+        return;
+    }
+
+    if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
+
+        mistakeMade++;
+    }
+
+    const accuracy = ((entry.length - mistakeMade) / entry.length) * 100;
+    accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
+});
 
 
 /*
