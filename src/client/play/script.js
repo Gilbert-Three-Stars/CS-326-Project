@@ -11,6 +11,8 @@ textEntry.addEventListener("input", () => {
 
     if(entry === quote) {
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
+        textEntry.contentEditable = false;
+        textEntry.blur();
     }
     else { // check if user is on the right track
         let shavedQuote = quote.substring(0, entry.length);
@@ -23,6 +25,7 @@ textEntry.addEventListener("input", () => {
     }
 })
 
+//tracks wpms, time, and accuracy
 let mistakeMade = 0
 let startTime;
 let wordCount = 0; 
@@ -66,6 +69,8 @@ async function startRound(){
 
 function restart(){
     textEntry.innerHTML = "";
+    textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
+    textEntry.contentEditable = true;
     mistakeMade = 0
     startTime = null;
     wordCount = 0; 
