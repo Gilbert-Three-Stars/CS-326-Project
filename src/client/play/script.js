@@ -1,6 +1,6 @@
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
-
+const wpmDisplay = document.getElementById('wpm');
 const accuracyDisplay = document.getElementById('acc');
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
@@ -20,23 +20,31 @@ textEntry.addEventListener("input", () => {
     }
 })
 
-let mistakeMade = 0; 
+let mistakeMade = 0
+let startTime;
+let wordCount = 0; 
 textEntry.addEventListener('input', function(event) {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
     if (event.inputType === 'deleteContentBackward') {
+        // Ignore backspace input
         return;
     }
-
     if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
-
         mistakeMade++;
     }
-
+    // Calculate accuracy: (total characters typed - mistakes) / total characters typed
     const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
+    if (!startTime) {
+        startTime = Date.now();
+    }
+    const words = entry.split(/\s+/);
+    wordCount = words.length;
+    const timeElapsed = (Date.now() - startTime) / (1000 * 60);
+    const wpm = Math.round(wordCount / timeElapsed);
     accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
+    wpmDisplay.textContent = `WPM: ${wpm}`;
 });
-
 
 /*
 things to track:
