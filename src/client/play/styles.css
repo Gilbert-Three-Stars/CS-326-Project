@@ -73,6 +73,6 @@ body{
     align-items: flex-start;
     /* Set text alignment to left */
     text-align: left;
-    
+    overflow: hidden;
 }
 
