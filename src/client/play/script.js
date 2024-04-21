@@ -58,34 +58,26 @@ let data = await db.load(name)
 data[property] = something
 await db.modify(data)
 */
-function parseCsv(csvData) {
-    const lines = csvData.split('\n');
-    const headers = lines[0].trim().split(',');
-    const data = [];
-  
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (line) {
-        const values = line.split(',');
-        const entry = {};
-        for (let j = 0; j < headers.length; j++) {
-          entry[headers[j]] = values[j];
-        }
-        data.push(entry);
-      }
-    }
-  
-    return data;
-}
+// Function to parse CSV data
+import {fs} from './fs'
 
-const csvFilePath = 'quotes.csv'; // Change this to the path of your CSV file
-fs.readFile(csvFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading CSV file:', err);
-      return;
-    }
+// File path of the CSV file
+const filePath = 'example.csv';
 
-    const parsedData = parseCsv(data);
+// Read the CSV file
+fs.readFile(filePath, 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error reading the file:', err);
+    return;
+  }
   
-    console.log(parsedData);
+  // Process the CSV data
+  processData(data);
 });
+
+function processData(csv) {
+  // Parse CSV data
+  // For example, using a CSV parsing library like csv-parser
+  // or implement custom parsing logic
+  console.log(csv);
+}
