@@ -4,6 +4,7 @@ const wpmDisplay = document.getElementById('wpm');
 const accuracyDisplay = document.getElementById('acc');
 const newTextBtn = document.getElementById("new-text");
 const restartBtn = document.getElementById('restart');
+
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
