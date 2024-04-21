@@ -68,3 +68,15 @@ body{
     font-size: 18px; /* Set font size */
     border-radius: 10px;
 }
+
+.enterGoalButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
