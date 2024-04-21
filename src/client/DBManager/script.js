@@ -75,7 +75,7 @@ async function viewAll() {
     }catch(error){}
 }
 
-let user = document.getElementById("user").innerHTML;
+let user = document.getElementById("profile").innerHTML;
 const db = new UserDB(user);
 
 
