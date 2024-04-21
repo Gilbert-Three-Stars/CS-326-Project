@@ -99,10 +99,13 @@ async function generateText(){
     });
 }
 
-async function startRound(text){
+async function startRound(){
     generateText().then(text=>{
         textEntry.innerHTML = "";
         quoteText.textContent = text[0];
+        mistakeMade = 0
+        startTime;
+        wordCount = 0; 
     })
 }
 
