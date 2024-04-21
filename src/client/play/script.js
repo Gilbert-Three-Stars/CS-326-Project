@@ -1,3 +1,25 @@
+const quoteText = document.getElementById('quote-text');
+const textEntry = document.querySelector('.text-entry');
+
+textEntry.addEventListener("input", () => {
+    const quote = quoteText.textContent.trim();
+    const entry = textEntry.textContent.trim();
+
+    if(entry === quote) {
+        textEntry.style.backgroundColor = rgb(115, 227, 84);
+    }
+    else { // check if user is on the right track
+        let shavedQuote = quote.substring(0, entry.length);
+        if(entry === shavedQuote) {
+            textEntry.style.backgroundColor = rgb(33, 33, 33);
+        } // if user is not on right track display in red
+        else {
+            textEntry.style.backgroundColor = rgb(204, 71, 61);
+        }
+    }
+})
+
+
 /*
 things to track:
 runs and key mistakes
