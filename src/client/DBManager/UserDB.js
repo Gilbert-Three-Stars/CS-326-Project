@@ -27,6 +27,7 @@ export class UserDB{
     let doc = await this.load(name);
     this.#db.remove(doc);
   }
+  //returns all data
   async loadAll() {
     const result = await this.#db.allDocs({ include_docs: true });
     return result.rows.map((row) => row.doc);
