@@ -59,3 +59,37 @@ data[property] = something
 await db.modify(data)
 */
 
+
+function generateText(){
+    fetch("quotes.csv")
+    .then(response => response.text())
+    .then(csvText =>{
+        // console.log(JSON.parse(csvText))
+        console.log((csvText))
+    })
+    .catch(error => console.error('Error fetching the CSV file:', error));
+}
+
+function startRound(text){
+
+}
+fetch('quotes.csv')
+  .then(response => response.text())
+  .then(csvText => {
+    const rows = csvText.split('\n');
+
+    // Process CSV data here
+    rows.forEach(row => {
+        const columns = row.split(',');
+        console.log(columns); // Example: Log each row as an array of columns
+    });
+  })
+  .catch(error => console.error('Error fetching the CSV file:', error));
+
+
+// generateText();
+const newTextBtn = document.getElementById("new-text");
+
+newTextBtn.addEventListener("click",()=>{
+    generateText();
+});
