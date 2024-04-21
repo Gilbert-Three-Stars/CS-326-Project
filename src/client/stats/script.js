@@ -69,7 +69,7 @@ let runs = [
 ]
 */
 
-let user = document.getElementById("profile").innerHTML;
+let user = document.getElementById("profile").textContent;
 let db = new UserDB(user);
 loadStats()
 createChart("wpm", "line", [], "No Data");

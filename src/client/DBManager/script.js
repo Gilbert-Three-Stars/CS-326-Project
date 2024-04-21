@@ -75,7 +75,7 @@ async function viewAll() {
     }catch(error){}
 }
 
-let user = document.getElementById("profile").innerHTML;
+let user = document.getElementById("profile").textContent;
 const db = new UserDB(user);
 
 
@@ -95,4 +95,4 @@ viewAllBtn.addEventListener("click",async ()=>{
     await viewAll();
 });
 // Load all counters in DB when page loads
-viewAll();
+await viewAll();
