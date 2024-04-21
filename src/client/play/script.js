@@ -86,41 +86,27 @@ await db.modify(data)
 */
 
 
-function generateText(){
-    fetch("quotes.csv")
-    .then(response => response.text())
-    .then(csvText =>{
-        // console.log(JSON.parse(csvText))
-        console.log((csvText))
+async function generateText(){
+    return new Promise((resolve, reject) => {
+        fetch("quotes.csv")
+            .then(response => response.text())
+            .then(csvText => {
+                let text = Papa.parse(csvText).data;
+                let randomIndex = Math.floor(Math.random() * text.length);
+                resolve(text[randomIndex]);
+            })
+            .catch(error => reject(error));
+    });
+}
+
+async function startRound(text){
+    generateText().then(text=>{
+        quoteText.textContent = text[0];
     })
-    .catch(error => console.error('Error fetching the CSV file:', error));
 }
 
-function startRound(text){
-
-}
-fetch('quotes.csv')
-  .then(response => response.text())
-  .then(csvText => {
-    const rows = csvText.split('\n');
-
-    // Process CSV data here
-    // rows.forEach(row => {
-    //     const columns = row.split(',');
-    //     console.log(columns); // Example: Log each row as an array of columns
-    // });
-    for(let i = 1; i < 20; ++i){
-        let text = rows[i]
-        console.log(text)
-    }
-    // console.log(rows)
-  })
-  .catch(error => console.error('Error fetching the CSV file:', error));
-
-
-// generateText();
 const newTextBtn = document.getElementById("new-text");
 
-newTextBtn.addEventListener("click",()=>{
-    generateText();
+newTextBtn.addEventListener("click",async()=>{
+    await startRound()
 });
