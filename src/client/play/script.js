@@ -33,7 +33,7 @@ textEntry.addEventListener('input', function(event) {
         mistakeMade++;
     }
 
-    const accuracy = ((entry.length - mistakeMade) / entry.length) * 100;
+    const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
     accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
 });
 
