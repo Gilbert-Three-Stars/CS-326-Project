@@ -58,26 +58,4 @@ let data = await db.load(name)
 data[property] = something
 await db.modify(data)
 */
-// Function to parse CSV data
-import {fs} from './fs'
 
-// File path of the CSV file
-const filePath = 'example.csv';
-
-// Read the CSV file
-fs.readFile(filePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the file:', err);
-    return;
-  }
-  
-  // Process the CSV data
-  processData(data);
-});
-
-function processData(csv) {
-  // Parse CSV data
-  // For example, using a CSV parsing library like csv-parser
-  // or implement custom parsing logic
-  console.log(csv);
-}
