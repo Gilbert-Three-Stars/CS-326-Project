@@ -75,8 +75,7 @@ async function viewAll() {
     }catch(error){}
 }
 
-let user = document.getElementById("profile").textContent;
-const db = new UserDB(user);
+const db = new UserDB("TestUser");
 
 
 createBtn.addEventListener("click",async ()=>{
