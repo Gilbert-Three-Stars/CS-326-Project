@@ -46,6 +46,41 @@ textEntry.addEventListener('input', function(event) {
     wpmDisplay.textContent = `WPM: ${wpm}`;
 });
 
+async function generateText(){
+    return new Promise((resolve, reject) => {
+        fetch("quotes.csv")
+            .then(response => response.text())
+            .then(csvText => {
+                let text = Papa.parse(csvText).data;
+                let randomIndex = Math.floor(Math.random() * text.length);
+                resolve(text[randomIndex]);
+            })
+            .catch(error => reject(error));
+    });
+}
+
+async function startRound(){
+    generateText().then(text=>{
+        textEntry.innerHTML = "";
+        quoteText.textContent = text[0];
+        mistakeMade = 0
+        startTime;
+        wordCount = 0; 
+    })
+}
+
+function restart(){
+    textEntry.innerHTML = "";
+    mistakeMade = 0
+    startTime;
+    wordCount = 0; 
+}
+
+const newTextBtn = document.getElementById("new-text");
+
+newTextBtn.addEventListener("click",async()=>{
+    await startRound()
+});
 /*
 things to track:
 runs and key mistakes
@@ -85,32 +120,3 @@ data[property] = something
 await db.modify(data)
 */
 
-
-async function generateText(){
-    return new Promise((resolve, reject) => {
-        fetch("quotes.csv")
-            .then(response => response.text())
-            .then(csvText => {
-                let text = Papa.parse(csvText).data;
-                let randomIndex = Math.floor(Math.random() * text.length);
-                resolve(text[randomIndex]);
-            })
-            .catch(error => reject(error));
-    });
-}
-
-async function startRound(){
-    generateText().then(text=>{
-        textEntry.innerHTML = "";
-        quoteText.textContent = text[0];
-        mistakeMade = 0
-        startTime;
-        wordCount = 0; 
-    })
-}
-
-const newTextBtn = document.getElementById("new-text");
-
-newTextBtn.addEventListener("click",async()=>{
-    await startRound()
-});
