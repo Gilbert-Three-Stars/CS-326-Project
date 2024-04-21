@@ -147,12 +147,23 @@ allButton.addEventListener("click",()=>{
 });
 
 //TODO temp remove later
-updateButton.addEventListener("click",()=>{
-    let newKeysData = {
-        a:4, b:10, c:6, d:17, e:5, f:12
-    };
-    if(charts["keys"])charts["keys"].destroy();
-    createChart("keys","bar",parseData(newKeysData), "# of Key Miss");
+updateButton.addEventListener("click",async()=>{
+    try{
+        const newKeys = await db.load("keys");
+        const newWPM = await db.load("wpm");
+        const newAcc = await db.load("acc");
+        let newKeysData = newKeys.data;
+        let newWPMData = newWPM.data;
+        let newAccData = newAcc.data;
+        if(charts["keys"])charts["keys"].destroy();
+        if(charts["wpm"]) charts["wpm"].destroy();
+        if(charts["acc"]) charts["acc"].destroy();
+        createChart("wpm", "line", newWPMData, "Words Per Minute");
+        createChart("acc", "line", newAccData, "Accuracy %");
+        createChart("keys","bar",parseData(newKeysData), "# of Key Miss");
+    }catch(error){
+        console.log(error);
+    }
 })
 
 
