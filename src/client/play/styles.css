@@ -90,10 +90,12 @@ body{
 }
 
 .text-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 200px;
+    top: 270px;
 }
 
 #quote-text {
