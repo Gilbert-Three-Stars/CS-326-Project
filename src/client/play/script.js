@@ -104,7 +104,7 @@ async function startRound(){
         textEntry.innerHTML = "";
         quoteText.textContent = text[0];
         mistakeMade = 0
-        startTime;
+        startTime = null
         wordCount = 0; 
     })
 }
