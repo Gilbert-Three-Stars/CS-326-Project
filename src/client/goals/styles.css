@@ -26,15 +26,17 @@ body{
     background-color: #4CAF50; 
 }
 
-.text-container{
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.container {
+    background-color: #000;
+    color: #fff;
     padding: 20px;
-    box-sizing: border-box;
-    margin-top: 100px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.text-container{
+    text-align: center;
 }
 
 .wpmContainer{
