@@ -68,8 +68,8 @@ async function startRound(){
     generateText().then(text=>{
         textEntry.innerHTML = "";
         quoteText.textContent = text[0];
-        mistakeMade = 0
-        startTime;
+        mistakeMade = 0;
+        startTime = null;
         wordCount = 0; 
     })
 }
