@@ -101,6 +101,7 @@ async function generateText(){
 
 async function startRound(text){
     generateText().then(text=>{
+        textEntry.innerHTML = "";
         quoteText.textContent = text[0];
     })
 }
