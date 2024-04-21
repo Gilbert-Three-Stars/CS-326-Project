@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="script.js" defer></script>
+    <script type="module" src="UserDB.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Admin</title>
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="../home/index.html">Home</a>
+        <a href="../play/index.html">Play</a>
+        <a href="../stats/index.html">Stats</a>
+        <a href="../goals/index.html">Goals</a>
+        <div id="user">TestUser</div>
+    </div>
+    
+    <h1 class ="data">Data Management</h1>
+
+    <!-- Text input for counter name -->
+    <label class = "data" for="dataName">Data Name:</label>
+    <input type="text" class = "data" id="dataName" placeholder="Enter data name" />
+    <br />
+    <br />
+
+    <!-- Buttons for actions -->
+    <div class="button">
+        <button id="createBtn">Create</button>
+        <button id="readBtn">Read</button>
+        <!-- <button id="updateBtn">Update</button> -->
+        <button id="deleteBtn">Delete</button>
+        <button id="viewAllBtn">View all</button>
+    </div>
+
+    <!-- Text box to display response sent by the server -->
+    <div id="dataTitle"><h1>Data:</h1><ul></ul></div>
+    <div id="dataResponse"></div>
+</body>
+</html>

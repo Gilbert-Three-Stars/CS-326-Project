@@ -1,4 +1,3 @@
-// import { PouchDB } from 'pouchdb'
 
 export class UserDB{
 

@@ -1,4 +1,4 @@
-import {UserDB} from "../UserDB.js";
+import {UserDB} from "../DBManager/UserDB.js";
 
 /**loads the stats on the stats page
 @param {Element} element - The DOM element to render the stats. 
@@ -69,7 +69,8 @@ let runs = [
 ]
 */
 
-let db = new UserDB("TestUser");
+let user = document.getElementById("user").innerHTML;
+let db = new UserDB(user);
 loadStats()
 createChart("wpm", "line", [], "No Data");
 createChart("acc", "line", [], "No Data");
