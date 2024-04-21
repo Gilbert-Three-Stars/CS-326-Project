@@ -6,7 +6,7 @@ textEntry.addEventListener("input", () => {
     const entry = textEntry.textContent.trim();
 
     if(entry === quote) {
-        textEntry.style.backgroundColor = 'rgb(115, 227, 84)';
+        textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
     }
     else { // check if user is on the right track
         let shavedQuote = quote.substring(0, entry.length);
@@ -14,7 +14,7 @@ textEntry.addEventListener("input", () => {
             textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
         } // if user is not on right track display in red
         else {
-            textEntry.style.backgroundColor = 'rgb(204, 71, 61)';
+            textEntry.style.backgroundColor = 'rgba(204, 71, 61, 0.5)';
         }
     }
 })
