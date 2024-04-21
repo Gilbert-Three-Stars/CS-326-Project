@@ -2,6 +2,8 @@ const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
 const wpmDisplay = document.getElementById('wpm');
 const accuracyDisplay = document.getElementById('acc');
+const newTextBtn = document.getElementById("new-text");
+
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
@@ -46,6 +48,46 @@ textEntry.addEventListener('input', function(event) {
     wpmDisplay.textContent = `WPM: ${wpm}`;
 });
 
+const response = await fetch("quotes.csv");
+const csvText = await response.text();
+const text = Papa.parse(csvText).data;
+async function generateText(){
+    return new Promise((resolve, reject) => {
+        fetch("quotes.csv")
+            .then(response => response.text())
+            .then(csvText => {
+                let text = Papa.parse(csvText).data;
+                let randomIndex = Math.floor(Math.random() * text.length);
+                resolve(text[randomIndex]);
+            })
+            .catch(error => reject(error));
+    });
+}
+
+async function startRound(){
+    generateText().then(text=>{
+        textEntry.innerHTML = "";
+        quoteText.textContent = text[0];
+        mistakeMade = 0
+        startTime;
+        wordCount = 0; 
+    })
+}
+
+function restart(){
+    textEntry.innerHTML = "";
+    mistakeMade = 0
+    startTime;
+    wordCount = 0; 
+}
+
+newTextBtn.addEventListener("click",async()=>{
+    await startRound()
+});
+
+
+
+startRound();
 /*
 things to track:
 runs and key mistakes
@@ -86,31 +128,3 @@ await db.modify(data)
 */
 
 
-async function generateText(){
-    return new Promise((resolve, reject) => {
-        fetch("quotes.csv")
-            .then(response => response.text())
-            .then(csvText => {
-                let text = Papa.parse(csvText).data;
-                let randomIndex = Math.floor(Math.random() * text.length);
-                resolve(text[randomIndex]);
-            })
-            .catch(error => reject(error));
-    });
-}
-
-async function startRound(){
-    generateText().then(text=>{
-        textEntry.innerHTML = "";
-        quoteText.textContent = text[0];
-        mistakeMade = 0
-        startTime;
-        wordCount = 0; 
-    })
-}
-
-const newTextBtn = document.getElementById("new-text");
-
-newTextBtn.addEventListener("click",async()=>{
-    await startRound()
-});
