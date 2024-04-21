@@ -54,13 +54,6 @@ body{
     background-color: #4CAF50; 
 }
 
-.text-entry-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust the height of the container as needed */
-}
-
 .text-entry {
     background-color: rgb(33, 33, 33); 
     padding: 10px;
@@ -74,5 +67,21 @@ body{
     /* Set text alignment to left */
     text-align: left;
     overflow: hidden;
+}
+
+.text-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+    
+}
+
+#quote-text {
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    padding: 10px;
 }
 
