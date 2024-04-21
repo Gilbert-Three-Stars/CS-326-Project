@@ -93,4 +93,14 @@ body{
     max-width: 500px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  }
+}
+
+.newCurrentGoal {
+    margin: 0 5px; /* Adjust as needed */
+    background-color: black; /* Set background color */
+    color: white; /* Set text color */
+    border: none; /* Remove border */
+    padding: 15px 30px; /* Set padding */
+    font-size: 18px; /* Set font size */
+    border-radius: 10px;
+}
