@@ -4,6 +4,6 @@ document.getElementById('enterGoalButton').addEventListener('click', function() 
 
     let newGoal = document.createElement('div');
     newGoal.classList.add('newCurrentGoal');
-    newGoal.innerHTML = '<h3>WPM Goal: ' + wpmGoal + '</h3><p>Number of Texts Goal: ' + txtGoal + '</p>';
+    newGoal.innerHTML = '<h3>Words Per Minute Goal: ' + wpmGoal + '</h3><h3>Number of Texts Goal: ' + txtGoal + '</h3>';
     document.querySelector('.current-goal').appendChild(newGoal);
 });
