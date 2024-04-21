@@ -25,3 +25,14 @@ body{
 .navbar a.active {
     background-color: #4CAF50; 
 }
+
+.text-containter{
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 100px;
+}
