@@ -36,4 +36,34 @@ let data = await db.load(name)
 data[property] = something
 await db.modify(data)
 */
+function parseCsv(csvData) {
+    const lines = csvData.split('\n');
+    const headers = lines[0].trim().split(',');
+    const data = [];
+  
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line) {
+        const values = line.split(',');
+        const entry = {};
+        for (let j = 0; j < headers.length; j++) {
+          entry[headers[j]] = values[j];
+        }
+        data.push(entry);
+      }
+    }
+  
+    return data;
+}
 
+const csvFilePath = 'quotes.csv'; // Change this to the path of your CSV file
+fs.readFile(csvFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading CSV file:', err);
+      return;
+    }
+
+    const parsedData = parseCsv(data);
+  
+    console.log(parsedData);
+});
