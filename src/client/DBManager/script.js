@@ -11,7 +11,7 @@ const viewAllBtn = document.getElementById("viewAllBtn");
 const response = document.getElementById("dataResponse");
 
 
-async function createCounter() {
+async function createData() {
     if(!nameInput.value || !dataInput.value){
         alert("Name/Input is required!");
     }else{
@@ -25,7 +25,7 @@ async function createCounter() {
 }
 
 
-async function readCounter() {
+async function readData() {
     if(!nameInput.value){
         alert("Name is required!");
     }else{
@@ -37,7 +37,7 @@ async function readCounter() {
 }
 
 
-async function updateCounter() {
+async function updateData() {
     if(!nameInput.value|| !dataInput.value){
         alert("Name/Input is required!");
     }else{
@@ -53,7 +53,7 @@ async function updateCounter() {
 
 }
 
-async function deleteCounter() {
+async function deleteData() {
     if(!nameInput.value){
         alert("Name is required!");
     }else{
@@ -79,16 +79,16 @@ const db = new UserDB("TestUser");
 
 
 createBtn.addEventListener("click",async ()=>{
-    await createCounter();
+    await createData();
 });
 readBtn.addEventListener("click",async ()=>{
-    await readCounter();
+    await readData();
 });
 updateBtn.addEventListener("click",async ()=>{
-    await updateCounter();
+    await updateData();
 });
 deleteBtn.addEventListener("click",async ()=>{
-    await deleteCounter();
+    await deleteData();
 });
 viewAllBtn.addEventListener("click",async ()=>{
     await viewAll();
