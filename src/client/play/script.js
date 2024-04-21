@@ -1,23 +1,41 @@
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
 
+const accuracyDisplay = document.getElementById('acc');
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
     if(entry === quote) {
-        textEntry.style.backgroundColor = rgb(115, 227, 84);
+        textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
     }
     else { // check if user is on the right track
         let shavedQuote = quote.substring(0, entry.length);
         if(entry === shavedQuote) {
-            textEntry.style.backgroundColor = rgb(33, 33, 33);
+            textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
         } // if user is not on right track display in red
         else {
-            textEntry.style.backgroundColor = rgb(204, 71, 61);
+            textEntry.style.backgroundColor = 'rgba(204, 71, 61, 0.5)';
         }
     }
 })
+
+let mistakeMade = 0; 
+textEntry.addEventListener('input', function(event) {
+    const quote = quoteText.textContent.trim();
+    const entry = textEntry.textContent.trim();
+    if (event.inputType === 'deleteContentBackward') {
+        return;
+    }
+
+    if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
+
+        mistakeMade++;
+    }
+
+    const accuracy = ((entry.length - mistakeMade) / entry.length) * 100;
+    accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
+});
 
 
 /*

@@ -4,7 +4,6 @@ body{
 }
 
 .stats-display-container {
-    /* top: 150px; */
     left: 0;
     width: 100%;
     display: flex;
@@ -12,6 +11,7 @@ body{
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    margin-top: 100px;
 }
 
 .stat-display {
@@ -90,12 +90,12 @@ body{
 }
 
 .text-container {
-    /* position: relative; */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 200px;
-    /* top: 270px; */
+    top: 270px;
 }
 
 #quote-text {
