@@ -3,7 +3,7 @@ const textEntry = document.querySelector('.text-entry');
 const wpmDisplay = document.getElementById('wpm');
 const accuracyDisplay = document.getElementById('acc');
 const newTextBtn = document.getElementById("new-text");
-
+const restartBtn = document.getElementById('restart');
 textEntry.addEventListener("input", () => {
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
@@ -77,7 +77,7 @@ async function startRound(){
 function restart(){
     textEntry.innerHTML = "";
     mistakeMade = 0
-    startTime;
+    startTime = null;
     wordCount = 0; 
 }
 
@@ -85,7 +85,9 @@ newTextBtn.addEventListener("click",async()=>{
     await startRound()
 });
 
-
+restartBtn.addEventListener('click', async() => {
+restart()
+});
 
 startRound();
 /*
