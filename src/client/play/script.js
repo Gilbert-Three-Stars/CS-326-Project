@@ -1,3 +1,6 @@
+import {UserDB} from "../DBManager/UserDB.js";
+const db = new UserDB();
+
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
 const wpmDisplay = document.getElementById('wpm');
@@ -31,6 +34,9 @@ function gameRunning(event){
     if(!timerRunning){
         startTimer();
     }
+    if (!startTime) {
+        startTime = Date.now();
+    }
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
@@ -55,24 +61,27 @@ function gameRunning(event){
         // Ignore backspace input
         return;
     }
-    const regex = /[A-Z]/;
+    
     if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
+        const regex = /[A-Z]/;
         mistakeMade++;
         let char = quote[entry.length-1].toUpperCase()
         if(regex.test(char))
             keyMistakes[char] = keyMistakes[char]+1;
     }
     // Calculate accuracy: (total characters typed - mistakes) / total characters typed
+    accuracyDisplay.textContent = `Accuracy: ${getAccuracy(entry)}%`;
+    wpmDisplay.textContent = `WPM: ${getWPM(entry)}`;
+}
+function getAccuracy(entry){
     const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
-    if (!startTime) {
-        startTime = Date.now();
-    }
+    return accuracy.toFixed(2);
+}
+function getWPM(entry){
     const words = entry.split(/\s+/);
     wordCount = words.length;
     const timeElapsed = (Date.now() - startTime) / (1000 * 60);
-    const wpm = Math.round(wordCount / timeElapsed);
-    accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
-    wpmDisplay.textContent = `WPM: ${wpm}`;
+    return Math.round(wordCount / timeElapsed);
 }
 let timer;
 let sec = 180;
@@ -101,7 +110,7 @@ function endGame(won){
     textEntry.contentEditable = false;
     textEntry.blur();
     //display end game stats: credits and time
-    creditsDisplay.innerHTML = `By: ${credits}`;
+    creditsDisplay.innerHTML = `By: ${quote[1]}`;
     const minutes = Math.floor((180-sec) / 60);
     let remainingSeconds = (180-sec) % 60;
     if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
@@ -112,7 +121,7 @@ function endGame(won){
     // save keyMistakes to db
     if(won) winGame();
 }
-function winGame(){
+async function winGame(){
     const currentDate = new Date();
 
     // Get the current year
@@ -124,22 +133,29 @@ function winGame(){
     // Get the current day of the month
     const currentDay = currentDate.getDate();
     const time = Date.now();
-    let run = {
-        wpm:
-        acc:
-        keyMistakes: keyMistakes;
-    }
+
+    const entry = textEntry.textContent.trim();
+
+    const run = {
+        wpm: getWPM(entry),
+        acc: getAccuracy(entry),
+        keyMistakes: keyMistakes,
+        time: [currentYear,currentMonth,currentDay,time],
+        quote: quote,
+    };
+    let runs = await db.load("runs");
+    runs["data"].push(run);
+    db.modify(runs);
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
 const parsedText = Papa.parse(csvText).data;
-let credits;
+let quote;
 async function startRound(){
     try{
         let randomIndex = Math.floor(Math.random() * parsedText.length);
-        let quote = parsedText[randomIndex];
+        quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
-        credits = quote[1];
     }catch(error){console.log(error)}
     restart();
 }
@@ -159,21 +175,7 @@ function restart(){
 
 
 startRound();
-/*
-things to track:
-runs and key mistakes
-should look like this:
-let keysData = {
-    a:10, b:4, c:14, d:7, e:15, f:9
-};
+if(db.load("runs")!==null) db.save("runs",[]);
 
-let runs = [
-    {
-        date:
-        wpm:
-        acc:
-    },
-]
-*/
 
 

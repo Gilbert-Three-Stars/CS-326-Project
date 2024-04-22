@@ -75,7 +75,7 @@ async function viewAll() {
     }catch(error){}
 }
 
-const db = new UserDB("TestUser");
+const db = new UserDB();
 
 
 createBtn.addEventListener("click",async ()=>{
