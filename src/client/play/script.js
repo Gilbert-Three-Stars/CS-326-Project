@@ -128,9 +128,11 @@ function restart(){
     textEntry.innerHTML = "";
     textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
     textEntry.contentEditable = true;
+    quoteText.innerText = quoteText.innerText;
     mistakeMade = 0
     startTime = null;
     wordCount = 0; 
+
 }
 
 

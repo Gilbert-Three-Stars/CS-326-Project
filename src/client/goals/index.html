@@ -6,6 +6,7 @@
     <title>Cultivating Fingers</title>
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="script.js" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@8.0.1/dist/pouchdb.min.js"></script>
   </head>
   <body>
     <div class="navbar">
@@ -24,11 +25,11 @@
         <div class="numText" id="txt">
           Number of Texts: <input type="number" id="nt" placeholder="Enter number of texts">
         </div>
-        <button id="enterGoalButton">Enter your Goal</button>
+        <button class = "enterGoalButton" id="enterWPMButton">Enter WPM Goal</button>
+        <button class = "enterGoalButton" id="enterTextButton">Enter Text Goal</button>
       </div>
       <h1>Current Goals</h1>
-      <div class="current-goal">
-      </div>
+      <div id="current-goal"></div>
     </div>
   </body>
 </html>
