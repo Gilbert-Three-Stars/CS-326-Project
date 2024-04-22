@@ -37,6 +37,7 @@ function gameRunning(event){
 
     if(entry === quote) {
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
+        quoteText.innerHTML = `<span class="green">${quote}</span>${quote.substring(entry.length)}`;
         endGame();
     }
     else { // check if user is on the right track
