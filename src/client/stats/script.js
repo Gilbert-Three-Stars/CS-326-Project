@@ -25,7 +25,7 @@ async function loadStats(){
     let remainingSeconds = runTime % 60;
     if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
     if(remainingSeconds===0)remainingSeconds="00";
-    const stats = [`${minutes}:${remainingSeconds}`,runs.length,topSpeed,totalSpeed/runs.length,topAcc,(totalAcc/runs.length).toFixed(2)];
+    const stats = [`${minutes}:${remainingSeconds}`,runs.length,topSpeed,(totalSpeed/runs.length).toFixed(2),topAcc,(totalAcc/runs.length).toFixed(2)];
     for(let i = 0; i < 6; ++i){
         const div = document.getElementById(statsLabel[i]);
         div.innerText = div.innerText + stats[i];
@@ -38,7 +38,23 @@ async function loadStats(){
 @param {string} chartTime - the time range of the data
 @param {object} data - the data of the charts
 */
-function createChart(id,chartType, data, label, chartTime="all"){
+function createChart(id,chartType, data, label){
+    let options = {
+        scales: {
+            x: {
+              display: false, 
+            },
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            tooltip: {
+              enabled: true 
+            }
+          }
+    }
+    if(id === "keys") options.scales.x.display = true;
     const ctx = document.getElementById(id);
     const chart = new Chart(ctx, {
         type: chartType,
@@ -49,13 +65,7 @@ function createChart(id,chartType, data, label, chartTime="all"){
                 data: data.data
             }],
         },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
+        options: options
     });
     charts[id] = chart;
 }
