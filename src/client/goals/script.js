@@ -32,6 +32,8 @@ import {UserDB} from "../DBManager/UserDB.js";
 
 //This is the code from stats. you can change it accordingly to fit this page.
 
+//if you want to access any of the data you created. Go to website, then stats->admin
+
 let db = new UserDB();
 
 const wpmInput = document.getElementById("wpmGoal");
@@ -62,44 +64,44 @@ async function createData(name,data) {
 }
 
 
-async function readData(name) {
-    if(!name){
-        alert("Name is required!");
-    }else{
-        try{
-            const data = await db.load(name);
-            response.innerHTML = JSON.stringify(data);
-        }catch(error){console.log(error);}
-    }
-}
+// async function readData(name) {
+//     if(!name){
+//         alert("Name is required!");
+//     }else{
+//         try{
+//             const data = await db.load(name);
+//             response.innerHTML = JSON.stringify(data);
+//         }catch(error){console.log(error);}
+//     }
+// }
 
 
-async function updateData(name,data) {
-    if(!name || !data){
-        alert("Name/Input is required!");
-    }else{
-        try{
-        const data = await db.load(name);
-        data.data.append(JSON.parse(data))
-        await db.modify(data);
-        }catch(error){
-            alert("Not valid data");
-        }
-        viewAll();
-    }
+// async function updateData(name,data) {
+//     if(!name || !data){
+//         alert("Name/Input is required!");
+//     }else{
+//         try{
+//         const data = await db.load(name);
+//         data.data.append(JSON.parse(data))
+//         await db.modify(data);
+//         }catch(error){
+//             alert("Not valid data");
+//         }
+//         viewAll();
+//     }
 
-}
+// }
 
-async function deleteData(name) {
-    if(!name){
-        alert("Name is required!");
-    }else{
-        try{
-            await db.delete(name);
-        }catch(error){}
-        viewAll();
-    }
-}
+// async function deleteData(name) {
+//     if(!name){
+//         alert("Name is required!");
+//     }else{
+//         try{
+//             await db.delete(name);
+//         }catch(error){}
+//         viewAll();
+//     }
+// }
 
 async function viewAll() {
     try{
