@@ -124,11 +124,12 @@ function winGame(){
     // Get the current day of the month
     const currentDay = currentDate.getDate();
     const time = Date.now();
+    /*
     let run = {
         wpm:
         acc:
         keyMistakes: keyMistakes;
-    }
+    } */
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
@@ -139,6 +140,7 @@ async function startRound(){
         let randomIndex = Math.floor(Math.random() * parsedText.length);
         let quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
+        
         credits = quote[1];
     }catch(error){console.log(error)}
     restart();
