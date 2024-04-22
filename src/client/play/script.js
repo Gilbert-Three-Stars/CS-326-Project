@@ -175,7 +175,8 @@ function restart(){
 
 
 startRound();
-if(db.load("runs")!==null) db.save("runs",[]);
+db.load("runs").catch(err=>db.save("runs",[]));
+
 
 
 
