@@ -13,60 +13,20 @@ const restartBtn = document.getElementById('restart');
 textEntry.addEventListener('paste', (event) => {
     event.preventDefault();
 });
-
 textEntry.addEventListener("input",(event)=>{
     gameRunning(event);
-})
-// textEntry.addEventListener("input", () => {
-//     if(!timerRunning){
-//         startTimer();
-//     }
-//     const quote = quoteText.textContent.trim();
-//     const entry = textEntry.textContent.trim();
+});
+newTextBtn.addEventListener("click",async()=>{
+    await startRound()
+});
 
-//     if(entry === quote) {
-//         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
-//         endGame();
-//     }
-//     else { // check if user is on the right track
-//         let shavedQuote = quote.substring(0, entry.length);
-//         if(entry === shavedQuote) {
-//             textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
-//         } // if user is not on right track display in red
-//         else {
-//             textEntry.style.backgroundColor = 'rgba(204, 71, 61, 0.5)';
-//         }
-//     }
-// })
-
-
-// textEntry.addEventListener('input', function(event) {
-//     const quote = quoteText.textContent.trim();
-//     const entry = textEntry.textContent.trim();
-//     if (event.inputType === 'deleteContentBackward') {
-//         // Ignore backspace input
-//         return;
-//     }
-//     if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
-//         mistakeMade++;
-//     }
-//     // Calculate accuracy: (total characters typed - mistakes) / total characters typed
-//     const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
-//     if (!startTime) {
-//         startTime = Date.now();
-//     }
-//     const words = entry.split(/\s+/);
-//     wordCount = words.length;
-//     const timeElapsed = (Date.now() - startTime) / (1000 * 60);
-//     const wpm = Math.round(wordCount / timeElapsed);
-//     accuracyDisplay.textContent = `Accuracy: ${accuracy.toFixed(2)}%`;
-//     wpmDisplay.textContent = `WPM: ${wpm}`;
-// });
-
-
+restartBtn.addEventListener('click', async() => {
+    restart()
+});
 let mistakeMade = 0
 let startTime;
 let wordCount = 0; 
+let keyMistakes = {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0,I:0,J:0,K:0,L:0,M:0,N:0,O:0,P:0,Q:0,R:0,S:0,T:0,U:0,V:0,W:0,X:0,Y:0,Z:0};
 function gameRunning(event){
     //tracks mistakes
     if(!timerRunning){
@@ -83,6 +43,7 @@ function gameRunning(event){
         let shavedQuote = quote.substring(0, entry.length);
         if(entry === shavedQuote) {
             textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
+            quoteText.innerHTML = `<span class="green">${shavedQuote}</span>${quote.substring(entry.length)}`;
         } // if user is not on right track display in red
         else {
             textEntry.style.backgroundColor = 'rgba(204, 71, 61, 0.5)';
@@ -132,8 +93,10 @@ function stopTimer(){
     timerRunning = false;
 }
 function endGame(){
+    //lock text box
     textEntry.contentEditable = false;
     textEntry.blur();
+    //display end game stats: credits and time
     creditsDisplay.innerHTML = `By: ${credits}`;
     const minutes = Math.floor((180-sec) / 60);
     let remainingSeconds = (180-sec) % 60;
@@ -147,17 +110,15 @@ function endGame(){
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
 const parsedText = Papa.parse(csvText).data;
-async function generateText(){
-    let randomIndex = Math.floor(Math.random() * parsedText.length);
-    return new Promise((resolve, reject) => { resolve(parsedText[randomIndex])});
-}
 let credits;
 async function startRound(){
+    try{
+        let randomIndex = Math.floor(Math.random() * parsedText.length);
+        let quote = parsedText[randomIndex];
+        quoteText.innerText = quote[0];
+        credits = quote[1];
+    }catch(error){console.log(error)}
     restart();
-    generateText().then(text=>{
-        credits = text[1];
-        quoteText.textContent = text[0].replace("’","'");
-    })
 }
 
 function restart(){
@@ -171,13 +132,6 @@ function restart(){
     wordCount = 0; 
 }
 
-newTextBtn.addEventListener("click",async()=>{
-    await startRound()
-});
-
-restartBtn.addEventListener('click', async() => {
-    restart()
-});
 
 startRound();
 /*
@@ -195,28 +149,6 @@ let runs = [
         acc:
     },
 ]
-
-save the data into UserDB
-ideally there should be a DOM element that we can extract the username from
-which means,
-let db = new UserDB(username)
-
-usernames are unique. need to figure out a way to make duplicate names unique
-calling new UserName(username) in another file will share 
-the same data. 
-
-all the functions are async
-
-data can be added like
-await db.save(name, data) //db.save("keys",keysData);
-
-getting data
-await db.load(name)
-
-updating data
-let data = await db.load(name)
-data[property] = something
-await db.modify(data)
 */
 
 
