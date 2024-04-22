@@ -19,7 +19,6 @@ textEntry.addEventListener("input",(event)=>{
 newTextBtn.addEventListener("click",async()=>{
     await startRound()
 });
-
 restartBtn.addEventListener('click', async() => {
     restart()
 });
@@ -38,7 +37,7 @@ function gameRunning(event){
     if(entry === quote) {
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
         quoteText.innerHTML = `<span class="green">${quote}</span>${quote.substring(entry.length)}`;
-        endGame();
+        endGame(true);
     }
     else { // check if user is on the right track
         let shavedQuote = quote.substring(0, entry.length);
@@ -88,7 +87,7 @@ function startTimer(){
         if(remainingSeconds===0)remainingSeconds="00";
         timeDisplay.innerHTML = `Time: ${minutes}:${remainingSeconds}`;
         --sec;
-        if(sec===-1)endGame();
+        if(sec===-1)endGame(false);
     },1000);
 }
 function stopTimer(){
@@ -97,7 +96,7 @@ function stopTimer(){
     sec = 180;
     timerRunning = false;
 }
-function endGame(){
+function endGame(won){
     //lock text box
     textEntry.contentEditable = false;
     textEntry.blur();
@@ -111,8 +110,26 @@ function endGame(){
     document.getElementById("endgame-stats-display").style.display = 'flex';
     stopTimer();
     // save keyMistakes to db
+    if(won) winGame();
 }
+function winGame(){
+    const currentDate = new Date();
 
+    // Get the current year
+    const currentYear = currentDate.getFullYear();
+
+    // Get the current month (0-indexed, so January is 0)
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 to convert to 1-based index
+
+    // Get the current day of the month
+    const currentDay = currentDate.getDate();
+    const time = Date.now();
+    let run = {
+        wpm:
+        acc:
+        keyMistakes: keyMistakes;
+    }
+}
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
 const parsedText = Papa.parse(csvText).data;
