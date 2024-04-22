@@ -117,31 +117,19 @@ function endGame(won){
     if(remainingSeconds===0)remainingSeconds="00";
     endTimeDisplay.innerHTML = `Time: ${minutes}:${remainingSeconds}`;
     document.getElementById("endgame-stats-display").style.display = 'flex';
-    stopTimer();
-    // save keyMistakes to db
     if(won) winGame();
+    stopTimer();
 }
 async function winGame(){
     const currentDate = new Date();
-
-    // Get the current year
-    const currentYear = currentDate.getFullYear();
-
-    // Get the current month (0-indexed, so January is 0)
-    const currentMonth = currentDate.getMonth() + 1; // Adding 1 to convert to 1-based index
-
-    // Get the current day of the month
-    const currentDay = currentDate.getDate();
-    const time = Date.now();
-
     const entry = textEntry.textContent.trim();
-
     const run = {
         wpm: getWPM(entry),
         acc: getAccuracy(entry),
         keyMistakes: keyMistakes,
-        time: [currentYear,currentMonth,currentDay,time],
-        quote: quote,
+        time: currentDate,
+        runTime: (180-sec) % 60,
+        quote: quote
     };
     let runs = await db.load("runs"); // adding the data of the typing run to the database.
     runs["data"].push(run);
@@ -156,8 +144,6 @@ async function startRound(){
         let randomIndex = Math.floor(Math.random() * parsedText.length);
         quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
-
-        credits = quote[1]; // this is the author of the quote
     }catch(error){console.log(error)}
     restart();
 }

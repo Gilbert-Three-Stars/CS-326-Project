@@ -95,3 +95,5 @@ viewAllBtn.addEventListener("click",async ()=>{
 });
 // Load all counters in DB when page loads
 await viewAll();
+
+
