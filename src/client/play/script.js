@@ -40,7 +40,7 @@ function gameRunning(event){
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
-    if(entry === quote) {
+    if(entry === quote) { // if the user has completed typing the text.
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
         quoteText.innerHTML = `<span class="green">${quote}</span>${quote.substring(entry.length)}`;
         endGame(true);
@@ -156,6 +156,8 @@ async function startRound(){
         let randomIndex = Math.floor(Math.random() * parsedText.length);
         quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
+
+        credits = quote[1];
     }catch(error){console.log(error)}
     restart();
 }
