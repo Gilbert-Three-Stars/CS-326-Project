@@ -40,7 +40,7 @@ function gameRunning(event){
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
-    if(entry === quote) {
+    if(entry === quote) { // if the user has completed typing the text.
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
         quoteText.innerHTML = `<span class="green">${quote}</span>${quote.substring(entry.length)}`;
         endGame(true);
@@ -86,7 +86,7 @@ function getWPM(entry){
 let timer;
 let sec = 180;
 let timerRunning = false;
-function startTimer(){
+function startTimer(){ // purpose of the startTime and stopTime functions are to track WPM
     timerRunning = true;
     timeDisplay.style.display = 'block';
     timer = setInterval(()=>{
@@ -143,7 +143,7 @@ async function winGame(){
         time: [currentYear,currentMonth,currentDay,time],
         quote: quote,
     };
-    let runs = await db.load("runs");
+    let runs = await db.load("runs"); // adding the data of the typing run to the database.
     runs["data"].push(run);
     db.modify(runs);
 }
@@ -156,6 +156,8 @@ async function startRound(){
         let randomIndex = Math.floor(Math.random() * parsedText.length);
         quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
+
+        credits = quote[1]; // this is the author of the quote
     }catch(error){console.log(error)}
     restart();
 }
