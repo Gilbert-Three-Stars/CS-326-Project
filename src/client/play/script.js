@@ -86,7 +86,7 @@ function getWPM(entry){
 let timer;
 let sec = 180;
 let timerRunning = false;
-function startTimer(){
+function startTimer(){ // purpose of the startTime and stopTime functions are to track WPM
     timerRunning = true;
     timeDisplay.style.display = 'block';
     timer = setInterval(()=>{
@@ -143,7 +143,7 @@ async function winGame(){
         time: [currentYear,currentMonth,currentDay,time],
         quote: quote,
     };
-    let runs = await db.load("runs");
+    let runs = await db.load("runs"); // adding the data of the typing run to the database.
     runs["data"].push(run);
     db.modify(runs);
 }
@@ -157,7 +157,7 @@ async function startRound(){
         quote = parsedText[randomIndex];
         quoteText.innerText = quote[0];
 
-        credits = quote[1];
+        credits = quote[1]; // this is the author of the quote
     }catch(error){console.log(error)}
     restart();
 }
