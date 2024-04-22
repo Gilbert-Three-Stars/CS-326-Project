@@ -159,16 +159,3 @@ await db.modify(data)
 */
 
 
-function deleteQuotesByAuthor() {
-    // Parse CSV data into an array of arrays
-    const rows = parsedText.split('\n').map(row => row.split(','));
-
-    // Filter out quotes by the specified author
-    const filteredRows = rows.filter(row => row[1].trim().includes("Lailah Gifty Akita"));
-
-    // Convert the filtered data back into CSV format
-    const updatedCsvText = filteredRows.map(row => row.join(',')).join('\n');
-
-    return updatedCsvText;
-}
-
