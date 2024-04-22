@@ -7,7 +7,9 @@ const newTextBtn = document.getElementById("new-text");
 const restartBtn = document.getElementById('restart');
 
 textEntry.addEventListener("input", () => {
-    if(!timerRunning)startTimer();
+    if(!timerRunning){
+        startTimer();
+    }
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
@@ -82,13 +84,13 @@ function endGame(){
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
-const text = Papa.parse(csvText).data;
+const parsedText = Papa.parse(csvText).data;
 
 // console.log(text[236719])
 
 async function generateText(){
-    let randomIndex = Math.floor(Math.random() * text.length);
-    return new Promise((resolve, reject) => { resolve(text[randomIndex])});
+    let randomIndex = Math.floor(Math.random() * parsedText.length);
+    return new Promise((resolve, reject) => { resolve(parsedText[randomIndex])});
 }
 
 async function startRound(){
@@ -156,4 +158,17 @@ data[property] = something
 await db.modify(data)
 */
 
+
+function deleteQuotesByAuthor() {
+    // Parse CSV data into an array of arrays
+    const rows = parsedText.split('\n').map(row => row.split(','));
+
+    // Filter out quotes by the specified author
+    const filteredRows = rows.filter(row => row[1].trim().includes("Lailah Gifty Akita"));
+
+    // Convert the filtered data back into CSV format
+    const updatedCsvText = filteredRows.map(row => row.join(',')).join('\n');
+
+    return updatedCsvText;
+}
 
