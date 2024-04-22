@@ -56,8 +56,12 @@ function gameRunning(event){
         // Ignore backspace input
         return;
     }
+    const regex = /[A-Z]/;
     if (entry.charAt(entry.length - 1) !== quote.charAt(entry.length - 1)) {
         mistakeMade++;
+        let char = quote[entry.length-1].toUpperCase()
+        if(regex.test(char))
+            keyMistakes[char] = keyMistakes[char]+1;
     }
     // Calculate accuracy: (total characters typed - mistakes) / total characters typed
     const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
@@ -106,6 +110,7 @@ function endGame(){
     endTimeDisplay.innerHTML = `Time: ${minutes}:${remainingSeconds}`;
     document.getElementById("endgame-stats-display").style.display = 'flex';
     stopTimer();
+    // save keyMistakes to db
 }
 
 const response = await fetch("quotes.csv");
@@ -132,7 +137,7 @@ function restart(){
     mistakeMade = 0
     startTime = null;
     wordCount = 0; 
-
+    keyMistakes = {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0,I:0,J:0,K:0,L:0,M:0,N:0,O:0,P:0,Q:0,R:0,S:0,T:0,U:0,V:0,W:0,X:0,Y:0,Z:0};
 }
 
 
