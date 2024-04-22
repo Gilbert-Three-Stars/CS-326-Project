@@ -2,17 +2,18 @@ const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
 const wpmDisplay = document.getElementById('wpm');
 const accuracyDisplay = document.getElementById('acc');
+const timeDisplay = document.getElementById("time");
 const newTextBtn = document.getElementById("new-text");
 const restartBtn = document.getElementById('restart');
 
 textEntry.addEventListener("input", () => {
+    if(!timerRunning)startTimer();
     const quote = quoteText.textContent.trim();
     const entry = textEntry.textContent.trim();
 
     if(entry === quote) {
         textEntry.style.backgroundColor = 'rgba(115, 227, 84, 0.5)';
-        textEntry.contentEditable = false;
-        textEntry.blur();
+        endGame();
     }
     else { // check if user is on the right track
         let shavedQuote = quote.substring(0, entry.length);
@@ -52,6 +53,33 @@ textEntry.addEventListener('input', function(event) {
     wpmDisplay.textContent = `WPM: ${wpm}`;
 });
 
+let timer;
+let sec = 10;
+let timerRunning = false;
+function startTimer(){
+    timerRunning = true;
+    timeDisplay.style.display = 'block';
+    timer = setInterval(()=>{
+        const minutes = Math.floor(sec / 60);
+        let remainingSeconds = sec % 60;
+        if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
+        if(remainingSeconds===0)remainingSeconds="00";
+        timeDisplay.innerHTML = `Time: ${minutes}:${remainingSeconds}`;
+        --sec;
+        if(sec===-1)endGame();
+    },1000);
+}
+function stopTimer(){
+    timeDisplay.style.display = 'none';
+    clearInterval(timer);
+    sec = 10;
+    timerRunning = false;
+}
+function endGame(){
+    textEntry.contentEditable = false;
+    textEntry.blur();
+    stopTimer();
+}
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
 const text = Papa.parse(csvText).data;
@@ -71,6 +99,7 @@ async function startRound(){
 }
 
 function restart(){
+    stopTimer();
     textEntry.innerHTML = "";
     textEntry.style.backgroundColor = 'rgb(33, 33, 33)';
     textEntry.contentEditable = true;
