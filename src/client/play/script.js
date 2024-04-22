@@ -54,7 +54,7 @@ textEntry.addEventListener('input', function(event) {
 });
 
 let timer;
-let sec = 10;
+let sec = 180;
 let timerRunning = false;
 function startTimer(){
     timerRunning = true;
@@ -72,7 +72,7 @@ function startTimer(){
 function stopTimer(){
     timeDisplay.style.display = 'none';
     clearInterval(timer);
-    sec = 10;
+    sec = 180;
     timerRunning = false;
 }
 function endGame(){
