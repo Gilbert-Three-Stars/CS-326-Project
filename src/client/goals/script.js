@@ -26,11 +26,13 @@ import {UserDB} from "../DBManager/UserDB.js";
 //     document.querySelector('.current-goal').appendChild(newGoal);
 // }
 
-let db = new UserDB();
+
+
 
 
 //This is the code from stats. you can change it accordingly to fit this page.
 
+let db = new UserDB();
 
 const wpmInput = document.getElementById("wpmGoal");
 const textInput = document.getElementById("nt");
@@ -107,7 +109,7 @@ async function viewAll() {
         //   responseText += `${data._id} = ${JSON.stringify(data.data)}<br>`;
         // });
         // currentGoal.innerHTML = responseText;
-        
+
         let wpm = await db.load("wpmGoals");
         currentGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
         let texts = await db.load("textGoals");
