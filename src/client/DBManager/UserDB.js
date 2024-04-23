@@ -3,8 +3,8 @@ export class UserDB{
 
   #db;
 
-  constructor(name) {
-    this.#db = new PouchDB(name); 
+  constructor() {
+    this.#db = new PouchDB("TestUser"); 
   }
 
   //saves the data to the database
