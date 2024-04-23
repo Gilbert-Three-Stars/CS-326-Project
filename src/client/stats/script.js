@@ -4,20 +4,32 @@ import {UserDB} from "../DBManager/UserDB.js";
 @param {Element} element - The DOM element to render the stats. 
 */
 async function loadStats(){
-    const stats = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
-    for(let i = 0; i < 6; ++i){
-        const div = document.getElementById(stats[i]);
-        /*when login is implemented
-        try{
-            const data = await db.load(username);
-            div.innerText = div.innerText + data;
-        }catch(error){
-            div.innerText = div.innerText + "No data available";
-        }
-        */
-        div.innerText = div.innerText + "No data available";
-    }
+    const statsLabel = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
+    const data = await db.load("runs");
+    const runs = data.data;
 
+    let runTime = 0;
+    let topSpeed = 0;
+    let totalSpeed = 0;
+    let topAcc = 0;
+    let totalAcc = 0;
+    runs.forEach(run =>{
+        runTime+=run.runTime;
+        totalSpeed+=run.wpm;
+        totalAcc+=parseFloat(run.acc);
+        if(run.wpm>topSpeed) topSpeed=run.wpm;
+        if(run.acc>topAcc) topAcc=run.acc;
+    });
+
+    const minutes = Math.floor(runTime / 60);
+    let remainingSeconds = runTime % 60;
+    if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
+    if(remainingSeconds===0)remainingSeconds="00";
+    const stats = [`${minutes}:${remainingSeconds}`,runs.length,topSpeed,(totalSpeed/runs.length).toFixed(2),topAcc,(totalAcc/runs.length).toFixed(2)];
+    for(let i = 0; i < 6; ++i){
+        const div = document.getElementById(statsLabel[i]);
+        div.innerText = div.innerText + stats[i];
+    }
 }
 
 /**loads the graphs on the stats page
@@ -26,7 +38,23 @@ async function loadStats(){
 @param {string} chartTime - the time range of the data
 @param {object} data - the data of the charts
 */
-function createChart(id,chartType, data, label, chartTime="all"){
+function createChart(id,chartType, data, label){
+    let options = {
+        scales: {
+            x: {
+              display: false, 
+            },
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            tooltip: {
+              enabled: true 
+            }
+          }
+    }
+    if(id === "keys") options.scales.x.display = true;
     const ctx = document.getElementById(id);
     const chart = new Chart(ctx, {
         type: chartType,
@@ -37,132 +65,111 @@ function createChart(id,chartType, data, label, chartTime="all"){
                 data: data.data
             }],
         },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
+        options: options
     });
     charts[id] = chart;
 }
-
-function parseData(data){
-    return {labels: Object.keys(data), data:Object.values(data)};
+async function reloadCharts(timePeriod){
+    const runs = await db.load("runs");
+    const data = parseData(runs.data,timePeriod);
+    if(charts["wpm"]) charts["wpm"].destroy();
+    if(charts["acc"]) charts["acc"].destroy();
+    if(charts["keys"]) charts["keys"].destroy();
+    createChart("wpm", "line", data[0], "Words Per Minute");
+    createChart("acc", "line", data[1], "Accuracy %");
+    createChart("keys", "bar", data[2], "# of Key Miss");
 }
 
+const dateToMonth = {0:"Jan",1:"Feb",2:"Mar",3:"Apr",4:"May",5:"Jun",6:"Jul",7:"Aug",8:"Sep",9:"Oct",10:"Nov",11:"Dec"}
+function parseData(runs, timePeriod){
+    let endDate = calculateDate(timePeriod);
+    let labels = []
+    let wpmData = []
+    let accData = []
+    let keyMistakesData = {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0,I:0,J:0,K:0,L:0,M:0,N:0,O:0,P:0,Q:0,R:0,S:0,T:0,U:0,V:0,W:0,X:0,Y:0,Z:0};
+    for(let i = runs.length-1; i >= 0 && endDate <= new Date(runs[i].time); --i){
+        let run = runs[i];
+        let date = new Date(run.time);
+        labels.unshift(`${dateToMonth[date.getMonth()]} ${date.getDate()},${date.getFullYear()}`);
+        wpmData.unshift(run.wpm);
+        accData.unshift(run.acc);
+        let keyMistakes = run.keyMistakes;
+        for(let [key, value] of Object.entries(keyMistakes)){
+            keyMistakesData[key] = keyMistakesData[key] + value;
+        }
+    }
+    const wpm = {
+        labels: labels,
+        data: wpmData
+    };
+    const acc = {
+        labels: labels,
+        data: accData
+    };
+    let keys = Object.keys(keyMistakesData).map(key => keyMistakesData[key]);
+    let abc = [
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+      ];
+    return [wpm, acc, {labels:abc,data:keys}];
+}
 
-let charts = {};
-
-//if user is logged in
-//if(loggedIn){code below}
-
+function calculateDate(time){
+    let currentDate = new Date();
+    if(time === "day")
+            currentDate.setDate(currentDate.getDate() - 1);
+    else if(time === "week")
+            currentDate.setDate(currentDate.getDate() - 7);
+    else if(time ==="month")
+            currentDate.setMonth(currentDate.getMonth() - 1);
+    else if(time === "year")
+            -currentDate.setFullYear(currentDate.getFullYear() - 1);
+    else
+        currentDate = new Date('2020-01-01');
+    return currentDate;
+}
 
 /*
 let runs = [
     {
-        date:
-        wpm:
-        acc:
+        wpm: #
+        acc: #
+        keyMistakes: {A:# ... Z:#}
+        time:[#,#,#,#]
+        runTime: #
+        quote: ["","",""]
     },
 ]
 */
 
-let db = new UserDB("TestUser");
-loadStats()
-createChart("wpm", "line", [], "No Data");
-createChart("acc", "line", [], "No Data");
-createChart("keys", "line", [], "No Data");
+
+let charts = {};
+let db = new UserDB();
+loadStats();
+reloadCharts("all");
 
 const dayButton = document.getElementById("day");
 const weekButton = document.getElementById("week");
 const monthButton = document.getElementById("month");
-const sixMonthButton = document.getElementById("6month");
+const yearButton = document.getElementById("year");
 const allButton = document.getElementById("all");
-const updateButton = document.getElementById("update");
 
 dayButton.addEventListener("click",()=>{
-    if(charts["wpm"]) charts["wpm"].destroy();
-    if(charts["acc"]) charts["acc"].destroy();
-    if(charts["keys"]) charts["keys"].destroy();
-    createChart("wpm", "line", [], "No Data");
-    createChart("acc", "line", [], "No Data");
-    createChart("keys", "line", [], "No Data");
+    reloadCharts("day");
 });
 weekButton.addEventListener("click",()=>{
-    if(charts["wpm"]) charts["wpm"].destroy();
-    if(charts["acc"]) charts["acc"].destroy();
-    if(charts["keys"]) charts["keys"].destroy();
-    createChart("wpm", "line", [], "No Data");
-    createChart("acc", "line", [], "No Data");
-    createChart("keys", "line", [], "No Data");
+    reloadCharts("week");
 });
 monthButton.addEventListener("click",()=>{
-    if(charts["wpm"]) charts["wpm"].destroy();
-    if(charts["acc"]) charts["acc"].destroy();
-    if(charts["keys"]) charts["keys"].destroy();
-    createChart("wpm", "line", [], "No Data");
-    createChart("acc", "line", [], "No Data");
-    createChart("keys", "line", [], "No Data");
+    reloadCharts("month");
 });
-sixMonthButton.addEventListener("click",()=>{
-    let wpm = {
-        labels: ["March","April","May","June","July","August"],
-        data: [74,83,89,95,96,101]
-    };
-    let acc = {
-        labels: ["March","April","May","June","July","August"],
-        data: [81,83,90,85,94,95],
-    };
-    let keysData = {
-        a:10, b:4, c:14, d:7, e:15, f:9
-    };
-    if(charts["wpm"]) charts["wpm"].destroy();
-    if(charts["acc"]) charts["acc"].destroy();
-    if(charts["keys"]) charts["keys"].destroy();
-    createChart("wpm","line",wpm,'Words Per Minute');
-    createChart("acc","line",acc,'Accuracy %');
-    createChart("keys","bar",parseData(keysData), "# of Key Miss");
+yearButton.addEventListener("click",()=>{
+    reloadCharts("year");
 });
 allButton.addEventListener("click",()=>{
-    let wpm = {
-        labels: ["Jan","Feb","March","April","May","June","July","August"],
-        data: [65,69,74,83,89,95,96,101]
-    };
-    let acc = {
-        labels: ["Jan","Feb","March","April","May","June","July","August"],
-        data: [75,80,81,83,90,85,94,95],
-    };
-    let keysData = {
-        a:12, b:5, c:16, d:7, e:17, f:11
-    };
-    if(charts["wpm"]) charts["wpm"].destroy();
-    if(charts["acc"]) charts["acc"].destroy();
-    if(charts["keys"]) charts["keys"].destroy();
-    createChart("wpm", "line", wpm, "Words Per Minute");
-    createChart("acc", "line", acc, "Accuracy %");
-    createChart("keys", "bar", parseData(keysData), "# of Key Miss");
+    reloadCharts("all");
 });
 
-//TODO temp remove later
-updateButton.addEventListener("click",async()=>{
-    try{
-        const newKeys = await db.load("keys");
-        const newWPM = await db.load("wpm");
-        const newAcc = await db.load("acc");
-        let newKeysData = newKeys.data;
-        let newWPMData = newWPM.data;
-        let newAccData = newAcc.data;
-        if(charts["keys"])charts["keys"].destroy();
-        if(charts["wpm"]) charts["wpm"].destroy();
-        if(charts["acc"]) charts["acc"].destroy();
-        createChart("wpm", "line", newWPMData, "Words Per Minute");
-        createChart("acc", "line", newAccData, "Accuracy %");
-        createChart("keys","bar",parseData(newKeysData), "# of Key Miss");
-    }catch(error){
-        console.log(error);
-    }
-})
+
 
 
