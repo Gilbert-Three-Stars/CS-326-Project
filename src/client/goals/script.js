@@ -49,6 +49,24 @@ textBtn.addEventListener("click",async()=>{
     await createData("textGoals",textInput.value);
 })
 
+//THIS IS CODE TO READ THE DATA
+
+// const data = await db.load("runs");
+// const runs = data.data;
+
+// let runTime = 0;
+// let topSpeed = 0;
+// let totalSpeed = 0;
+// let topAcc = 0;
+// let totalAcc = 0;
+// runs.forEach(run =>{
+//     runTime+=run.runTime;
+//     totalSpeed+=run.wpm;
+//     totalAcc+=parseFloat(run.acc);
+//     if(run.wpm>topSpeed) topSpeed=run.wpm;
+//     if(run.acc>topAcc) topAcc=run.acc;
+// });
+
 async function createData(name,data) {
     if(!name || !data){
         alert("Name/Input is required!");
