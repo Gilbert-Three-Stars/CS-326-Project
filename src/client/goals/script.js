@@ -38,16 +38,36 @@ let db = new UserDB();
 
 const wpmInput = document.getElementById("wpmGoal");
 const textInput = document.getElementById("nt");
-const wpmBtn = document.getElementById("enterWPMButton");
-const textBtn = document.getElementById("enterTextButton");
+//const wpmBtn = document.getElementById("enterWPMButton");
+//const textBtn = document.getElementById("enterTextButton");
+const enterGoalButton = document.getElementById("enterGB");
 const currentGoal = document.getElementById("current-goal");
 
-wpmBtn.addEventListener("click",async()=>{
-    await createData("wpmGoals",wpmInput.value);
-})
-textBtn.addEventListener("click",async()=>{
+enterGoalButton.addEventListener("click",async()=>{
+    await createData("wpmGoals", wpmInput.value);
+    await createData("textGoals", textInput.value);
+});
+/*textBtn.addEventListener("click",async()=>{
     await createData("textGoals",textInput.value);
-})
+})*/
+
+//THIS IS CODE TO READ THE DATA
+
+// const data = await db.load("runs");
+// const runs = data.data;
+
+// let runTime = 0;
+// let topSpeed = 0;
+// let totalSpeed = 0;
+// let topAcc = 0;
+// let totalAcc = 0;
+// runs.forEach(run =>{
+//     runTime+=run.runTime;
+//     totalSpeed+=run.wpm;
+//     totalAcc+=parseFloat(run.acc);
+//     if(run.wpm>topSpeed) topSpeed=run.wpm;
+//     if(run.acc>topAcc) topAcc=run.acc;
+// });
 
 async function createData(name,data) {
     if(!name || !data){
