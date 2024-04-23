@@ -75,7 +75,7 @@ async function viewAll() {
     }catch(error){}
 }
 
-const db = new UserDB("TestUser");
+const db = new UserDB();
 
 
 createBtn.addEventListener("click",async ()=>{
@@ -95,3 +95,5 @@ viewAllBtn.addEventListener("click",async ()=>{
 });
 // Load all counters in DB when page loads
 await viewAll();
+
+
