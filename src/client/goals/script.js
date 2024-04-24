@@ -84,7 +84,7 @@ processResButton.addEventListener("click", async () => {
             previousGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
             db.delete("wpmGoals");
             db.delete("textGoals");
-            db.delete("run");
+            // db.delete("run");
             currentGoal.innerHTML = "";
             currentGoal.innerHTML = "";
             numRuns = 0;
