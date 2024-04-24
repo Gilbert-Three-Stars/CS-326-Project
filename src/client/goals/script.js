@@ -85,8 +85,8 @@ processResButton.addEventListener("click", async () => {
             try{
                 // await db.save("prevWpmGoals", wpmGoal);
                 // await db.save("prevTextGoals", textGoal);
-                updateData("prevWpmGoals", wpmGoalData);
-                updateData("prevTextGoals", textGoalData);
+                updateData("prevWpmGoals", wpmGoal);
+                updateData("prevTextGoals", textGoal);
                 await db.delete("wpmGoals");
                 await db.delete("textGoals");
             }
@@ -162,13 +162,13 @@ async function createData(name,data) {
 // }
 
 
-async function updateData(name,data) {
-    if(!name || !data){
+async function updateData(name,newData) {
+    if(!name || !newData){
         alert("Name/Input is required!");
     }else{
         try{
             const data = await db.load(name);
-            data.data.append(JSON.parse(data));
+            data.data.push(JSON.parse(newData));
             await db.modify(data);
         }catch(error){
             alert("Not valid data");
