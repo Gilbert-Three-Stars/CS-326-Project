@@ -78,14 +78,19 @@ processResButton.addEventListener("click", async () => {
     const wpmGoalData = await db.load("wpmGoals");
     const textGoalData = await db.load("textGoals");
 
-    const wpmGoal = wpmGoalData.value;
-    const textGoal = textGoalData.value;
+    const wpmGoal = wpmGoalData.data;
+    const textGoal = textGoalData.data;
         if((avg >= wpmGoal) && (numRuns >= textGoal)){
             //goal achieved
-            await db.save("prevWpmGoals", wpmGoal);
-            await db.save("prevTextGoals", textGoal);
-            await db.delete("wpmGoals");
-            await db.delete("textGoals");
+            try{
+                await db.save("prevWpmGoals", wpmGoal);
+                await db.save("prevTextGoals", textGoal);
+                await db.delete("wpmGoals");
+                await db.delete("textGoals");
+            }
+            catch(error){
+                alert("something is wrong");
+            }
         }
         else{
             alert("goal not met");
