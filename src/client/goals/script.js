@@ -42,6 +42,8 @@ const textInput = document.getElementById("nt");
 //const textBtn = document.getElementById("enterTextButton");
 const enterGoalButton = document.getElementById("enterGB");
 const currentGoal = document.getElementById("current-goal");
+const previousGoal = document.getElementById("previous-goal");
+const processResButton = document.getElementById("processRes");
 
 enterGoalButton.addEventListener("click",async()=>{
     await createData("wpmGoals", wpmInput.value);
@@ -53,21 +55,79 @@ enterGoalButton.addEventListener("click",async()=>{
 
 //THIS IS CODE TO READ THE DATA
 
-// const data = await db.load("runs");
-// const runs = data.data;
+processResButton.addEventListener("click", async () => {
+    const data = await db.load("runs");
+    const runs = data.data;
+    //processRun(runs);
+    let runTime = 0;
+    let topSpeed = 0;
+    let totalSpeed = 0;
+    let topAcc = 0;
+    let totalAcc = 0;
+    let numRuns = 0;
+    runs.forEach(run =>{
+        runTime+=run.runTime;
+        totalSpeed+=run.wpm;
+        totalAcc+=parseFloat(run.acc);
+        numRuns++;
+        if(run.wpm>topSpeed) topSpeed=run.wpm;
+        if(run.acc>topAcc) topAcc=run.acc;
+    });
+    let avg = totalSpeed/numRuns;
+    if((avg >= wpmInput.value) && (numRuns >= textInput.value)){
+        //goal achieved
+        let wpm = await db.load("wpmGoals");
+        previousGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
+        let texts = await db.load("textGoals");
+        previousGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
+        db.delete("wpmGoals");
+        db.delete("textGoals");
+        db.delete("runs");
+        currentGoal.innerHTML = "";
+        currentGoal.innerHTML = "";
+        numRuns = 0;
+        avg = 0;
+        alert("You did meet your goals");
+    }
+    else{
+        alert("You did not meet your goals");
+    }
+});
 
-// let runTime = 0;
-// let topSpeed = 0;
-// let totalSpeed = 0;
-// let topAcc = 0;
-// let totalAcc = 0;
-// runs.forEach(run =>{
-//     runTime+=run.runTime;
-//     totalSpeed+=run.wpm;
-//     totalAcc+=parseFloat(run.acc);
-//     if(run.wpm>topSpeed) topSpeed=run.wpm;
-//     if(run.acc>topAcc) topAcc=run.acc;
-// });
+async function checkAchievements(avg){
+    if((avg >= wpmInput.value) && (numRuns >= textInput.value)){
+        //goal achieved
+        let wpm = await db.load("wpmGoals");
+        previousGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
+        let texts = await db.load("textGoals");
+        previousGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
+        db.delete("wpmGoals");
+        db.delete("textGoals");
+        currentGoal.innerHTML = "";
+        currentGoal.innerHTML = "";
+        numRuns = 0;
+        avg = 0;
+    }
+}
+
+async function processRun(runs){
+    let runTime = 0;
+    let topSpeed = 0;
+    let totalSpeed = 0;
+    let topAcc = 0;
+    let totalAcc = 0;
+    let numRuns = 0;
+    runs.forEach(run =>{
+        runTime+=run.runTime;
+        totalSpeed+=run.wpm;
+        totalAcc+=parseFloat(run.acc);
+        numRuns++;
+        if(run.wpm>topSpeed) topSpeed=run.wpm;
+        if(run.acc>topAcc) topAcc=run.acc;
+    });
+    let avg = totalSpeed/numRuns;
+    checkAchievements(avg);
+}
 
 async function createData(name,data) {
     if(!name || !data){
