@@ -95,7 +95,7 @@ processResButton.addEventListener("click", async () => {
         else{
             alert("goal not met");
         }
-    
+    viewAll();
 });
 
 /*async function checkAchievements(avg){
@@ -200,9 +200,9 @@ async function viewAll() {
         currentGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
         let texts = await db.load("textGoals");
         currentGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
-        let prevWpm = await db.load("wpmGoals");
+        let prevWpm = await db.load("prevWpmGoals");
         previousGoal.innerHTML = `WPM Goals: ${JSON.stringify(prevWpm.data)}`;
-        let prevTexts = await db.load("textGoals");
+        let prevTexts = await db.load("prevTextGoals");
         previousGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(prevTexts.data)}`;
     }catch(error){}
 }
