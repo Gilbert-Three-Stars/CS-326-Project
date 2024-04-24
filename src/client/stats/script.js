@@ -18,7 +18,7 @@ async function loadStats(){
         totalSpeed+=run.wpm;
         totalAcc+=parseFloat(run.acc);
         if(run.wpm>topSpeed) topSpeed=run.wpm;
-        if(run.acc>topAcc) topAcc=run.acc;
+        if(parseFloat(run.acc) >topAcc) topAcc=parseFloat(run.acc);
     });
 
     const minutes = Math.floor(runTime / 60);
