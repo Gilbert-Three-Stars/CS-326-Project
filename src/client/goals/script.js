@@ -59,7 +59,6 @@ processResButton.addEventListener("click", async () => {
                 await db.delete("wpmGoals");
                 await db.delete("textGoals");
                 currentGoal.innerHTML = "";
-                //currentGoal.innerHTML = "You have no current goals, enter one!"; 
             }
             catch(error){
                 alert("something is wrong");
@@ -113,7 +112,7 @@ async function viewAll() {
             currentGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
         }
         catch(err){
-            currentGoal.innerHTML = "Enter a goal!";
+            currentGoal.innerHTML = "You have no current goals, enter a goal!";
         }
         let prevWpm = await db.load("prevWpmGoals");
         let prevTexts = await db.load("prevTextGoals");
