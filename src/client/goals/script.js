@@ -113,9 +113,11 @@ async function viewAll() {
         }
         catch(err){}
         let prevWpm = await db.load("prevWpmGoals");
-        previousGoal.innerHTML = `WPM Goals: ${JSON.stringify(prevWpm.data)}`;
         let prevTexts = await db.load("prevTextGoals");
-        previousGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(prevTexts.data)}`;
+        previousGoal.innerHTML = `Here are your goals you passed:`;
+        for (let index = 0; index < prevWpm.data.length; index++) {
+            previousGoal.innerHTML += `<br>You achieved ${JSON.stringify(prevWpm.data[index])} words per minute average over ${JSON.stringify(prevTexts.data[index])} texts!`;
+        }
     }catch(error){}
 }
 
