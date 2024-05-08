@@ -1,4 +1,4 @@
-import {UserDB} from "../DBManager/UserDB.js";
+
 
 /**loads the stats on the stats page
 @param {Element} element - The DOM element to render the stats. 
@@ -70,7 +70,9 @@ function createChart(id,chartType, data, label){
     charts[id] = chart;
 }
 async function reloadCharts(timePeriod){
-    const runs = await db.load("runs");
+    // const runs = await db.load("runs");
+    await fetch(`localhost:3000/read?name=$runs`,{method: "GET"});
+    const runs = await response.text();
     const data = parseData(runs.data,timePeriod);
     if(charts["wpm"]) charts["wpm"].destroy();
     if(charts["acc"]) charts["acc"].destroy();

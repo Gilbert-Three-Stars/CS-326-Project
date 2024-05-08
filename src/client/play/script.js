@@ -1,5 +1,4 @@
-import {UserDB} from "../DBManager/UserDB.js";
-const db = new UserDB();
+
 
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
@@ -131,10 +130,7 @@ async function winGame(){
         runTime: (180-sec) % 60,
         quote: quote
     };
-    await fetch(`${url}/update?name=${'runs'}&value=${run}`,{method: "PUT"});
-    // let runs = await db.load("runs"); // adding the data of the typing run to the database.
-    // runs["data"].push(run);
-    // db.modify(runs);
+    await fetch(`localhost:3000/update?name=${'runs'}&value=${run}`,{method: "PUT"});
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
@@ -164,7 +160,7 @@ function restart(){
 
 
 startRound();
-db.load("runs").catch(err=>db.save("runs",[]));
+
 
 
 

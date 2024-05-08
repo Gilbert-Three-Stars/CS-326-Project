@@ -25,13 +25,20 @@ async function update(response, name, value) {
     }
     catch(e) {
         response.writeHead(404,headerFields);
-        console.log("here")
-        console.log(e)
         response.end();
     }
 }
 
-// async function 
+async function read(response, name){
+  try{
+    const runs = await db.load(name);
+    response.writeHead(200, headerFields);
+    response.end(runs);
+  }catch(e){
+    response.writeHead(404,headerFields);
+    response.end();
+  }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -49,6 +56,10 @@ app.get('/', (req, res) => {
 app.route('/update').put(async (request, response) => {
   const options = request.query;
   await update(response, options.name, options.value);
+})
+app.route('/read').put(async (request, response) => {
+  const options = request.query;
+  await update(response, options.name);
 })
 
 app.route("*").all(async (request, response) => {
