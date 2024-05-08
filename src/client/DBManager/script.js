@@ -10,13 +10,15 @@ const deleteBtn = document.getElementById("deleteBtn");
 const viewAllBtn = document.getElementById("viewAllBtn");
 const response = document.getElementById("dataResponse");
 
-
+const url = 'http://localhost:3000'
 async function createData() {
     if(!nameInput.value || !dataInput.value){
         alert("Name/Input is required!");
     }else{
         try{
-            await db.save(nameInput.value, JSON.parse(dataInput.value));
+            const response = await fetch(`${url}/create?name${nameInput.value}`,{method: "POST"});
+            const data = await response.text;
+            // await db.save(nameInput.value, JSON.parse(dataInput.value));
         }catch(error){
             alert("Either duplicate creation or not valid data");
         }

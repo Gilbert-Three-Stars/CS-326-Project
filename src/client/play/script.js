@@ -131,9 +131,10 @@ async function winGame(){
         runTime: (180-sec) % 60,
         quote: quote
     };
-    let runs = await db.load("runs"); // adding the data of the typing run to the database.
-    runs["data"].push(run);
-    db.modify(runs);
+    await fetch(`${url}/update?name=${'runs'}&value=${run}`,{method: "PUT"});
+    // let runs = await db.load("runs"); // adding the data of the typing run to the database.
+    // runs["data"].push(run);
+    // db.modify(runs);
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();

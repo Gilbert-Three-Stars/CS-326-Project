@@ -1,8 +1,24 @@
+import * as db from './db.js'
 
+const headerFields = {'Content-Type': 'text/html'}
 const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
+
+async function update(response, name, value) {
+    try {
+        const runs = await db.load(name);
+        runs.data.push(value);
+        db.modify(runs)
+        response.writeHead(200/headerFields);
+        response.end();
+    }
+    catch(e) {
+        response.writeHead(404/headerFields);
+        response.end();
+    }
+}
 
 
 app.use(express.json());
@@ -25,3 +41,8 @@ app.route("*").all(async (request, response) => {
 app.listen(port, () => {
     console.log("listening on port " + port);
 });
+
+app.route('/update').put(async (request, response) => {
+    const options = request.query;
+    update(response, options.name, options.value);
+})
