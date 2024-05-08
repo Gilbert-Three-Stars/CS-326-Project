@@ -136,13 +136,8 @@ async function winGame(){
         "runTime": (180-sec) % 60,
         "quote": quote
     };
-<<<<<<< Updated upstream
     const runJsonString = JSON.stringify(run)
     await fetch(`http://localhost:3000/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
-=======
-    await fetch(`localhost:3000/update?name=runs&value=${run}`,{method: "PUT"});
-    // check for any completed goals.
->>>>>>> Stashed changes
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
