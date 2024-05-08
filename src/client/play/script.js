@@ -130,7 +130,7 @@ async function winGame(){
         runTime: (180-sec) % 60,
         quote: quote
     };
-    await fetch(`localhost:3000/update?name=${'runs'}&value=${run}`,{method: "PUT"});
+    await fetch(`localhost:3000/update?name=runs&value=${run}`,{method: "PUT"});
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();

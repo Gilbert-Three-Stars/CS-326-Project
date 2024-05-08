@@ -57,7 +57,7 @@ app.route('/update').put(async (request, response) => {
   const options = request.query;
   await update(response, options.name, options.value);
 })
-app.route('/read').put(async (request, response) => {
+app.route('/read').get(async (request, response) => {
   const options = request.query;
   await update(response, options.name);
 })
