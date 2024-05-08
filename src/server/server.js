@@ -14,9 +14,14 @@ app.use('/stats', express.static(path.join(__dirname, '../client', 'stats')));
 app.use('/goals', express.static(path.join(__dirname, '../client', 'goals')));
 // Define route handlers
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client','home','index.html'));
+    res.redirect('/home');
+    res.sendFile(path.join(__dirname, '../client','home', 'index.html'));
+});
+
+app.route("*").all(async (request, response) => {
+    response.status(404).send(`Not found: ${request.path}`);  
 });
   
 app.listen(port, () => {
     console.log("listening on port " + port);
-})
+});
