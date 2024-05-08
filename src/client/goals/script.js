@@ -9,20 +9,32 @@ let db = new UserDB();
 const wpmInput = document.getElementById("wpmGoal");
 const textInput = document.getElementById("nt");
 const enterGoalButton = document.getElementById("enterGB");
-const currentGoal = document.getElementById("current-goal");
+const currentGoals = document.getElementById("current-goals");
 const previousGoal = document.getElementById("previous-goal");
 const processResButton = document.getElementById("processRes");
 
 //uploads user inputted goal to current goal upon clicking enter goal button
 enterGoalButton.addEventListener("click",async()=>{
-    await createData("wpmGoals", wpmInput.value);
-    await createData("textGoals", textInput.value);
+    // await createData("wpmGoals", wpmInput.value);
+    if(!wpmInput.value) {
+        alert("Please specify the desired words per minute")
+        return;
+    }
+    if(!textInput.value) {
+        alert("Please specify the number of texts");
+        return;
+    }
+
+    let curGoal = JSON.stringify({'wpm': wpmInput.value, 'numTexts': textInput.value});
+    await fetch(`localhost:3000/update?name=goals&value=${encodedURIComponent(curGoal)}`,{method: "PUT"}); // add it to the goals in database
+    let newGoal = document.createElement('div');
+    newGoal.textContent = `Type ${wpmInput.value} words per minute over a span of ${textInput.value} text(s)`;
+    currentGoals.appendChild(newGoal);
 });
 
 //This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
 processResButton.addEventListener("click", async () => {
-    const data = await db.load("runs");
-    const runs = data.data;
+    const runs = await fetch(`localhost:3000/read?name=runs`,{method: "GET"});
     let runTime = 0;
     let topSpeed = 0;
     let totalSpeed = 0;
