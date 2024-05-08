@@ -1,4 +1,4 @@
-{
+{ "type": "module",
   "devDependencies": {
     "html-validate": "^8.18.1",
     "http-server": "^14.1.1",

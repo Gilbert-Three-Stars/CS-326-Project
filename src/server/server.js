@@ -1,8 +1,11 @@
 import * as db from './db.js'
+import express from "express"
+import path from "path"
+import { fileURLToPath } from 'url';
+
 
 const headerFields = {'Content-Type': 'text/html'}
-const express = require('express');
-const path = require('path');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 3000;
 
@@ -24,7 +27,7 @@ async function update(response, name, value) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../client')));
-app.use('/home', express.static(path.join(__dirname, '..client', 'home')));
+app.use('/home', express.static(path.join(__dirname, '../client', 'home')));
 app.use('/play', express.static(path.join(__dirname, '../client', 'play')));
 app.use('/stats', express.static(path.join(__dirname, '../client', 'stats')));
 app.use('/goals', express.static(path.join(__dirname, '../client', 'goals')));
