@@ -1,5 +1,3 @@
-import {UserDB} from "../DBManager/UserDB.js";
-
 
 const nameInput = document.getElementById("dataName");
 const dataInput = document.getElementById("dataInput");
@@ -8,7 +6,7 @@ const readBtn = document.getElementById("readBtn");
 const updateBtn = document.getElementById("updateBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const viewAllBtn = document.getElementById("viewAllBtn");
-const response = document.getElementById("dataResponse");
+const responseTextBox = document.getElementById("dataResponse");
 
 const url = 'http://localhost:3000'
 async function createData() {
@@ -16,9 +14,7 @@ async function createData() {
         alert("Name/Input is required!");
     }else{
         try{
-            const response = await fetch(`${url}/create?name${nameInput.value}`,{method: "POST"});
-            const data = await response.text;
-            // await db.save(nameInput.value, JSON.parse(dataInput.value));
+            await fetch(`${url}/create?name=${nameInput.value}&value=${dataInput.value}`,{method: "POST"});
         }catch(error){
             alert("Either duplicate creation or not valid data");
         }
@@ -32,8 +28,9 @@ async function readData() {
         alert("Name is required!");
     }else{
         try{
-            const data = await db.load(nameInput.value);
-            response.innerHTML = JSON.stringify(data);
+            const response = await fetch(`${url}/read?name=${nameInput.value}`,{method: "GET"});
+            const runs = await response.text();
+            responseTextBox.innerHTML = runs;
         }catch(error){console.log(error);}
     }
 }
@@ -44,9 +41,7 @@ async function updateData() {
         alert("Name/Input is required!");
     }else{
         try{
-        const data = await db.load(nameInput.value);
-        data.data = JSON.parse(dataInput.value)
-        await db.modify(data);
+            await fetch(`${url}/update?name=${nameInput.value}&value=${dataInput.value}`,{method: "PUT"});
         }catch(error){
             alert("Not valid data");
         }
@@ -60,7 +55,8 @@ async function deleteData() {
         alert("Name is required!");
     }else{
         try{
-            await db.delete(nameInput.value);
+            await fetch(`${url}/delete?name=${nameInput.value}`,{method:"DELELTE"})
+            //localhost:3000/delete?name=test
         }catch(error){}
         viewAll();
     }
@@ -68,16 +64,11 @@ async function deleteData() {
 
 async function viewAll() {
     try{
-        const all = await db.loadAll();
-        let responseText = "";
-        all.forEach((data) => {
-          responseText += `${data._id} = ${JSON.stringify(data.data)}<br>`;
-        });
-        response.innerHTML = responseText;
+        const response = await fetch(`${url}/all`,{method:"GET"});
+        const responseText = await response.text()
+        responseTextBox.innerHTML = responseText;
     }catch(error){}
 }
-
-const db = new UserDB();
 
 
 createBtn.addEventListener("click",async ()=>{
