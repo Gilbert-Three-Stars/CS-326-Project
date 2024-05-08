@@ -11,18 +11,27 @@ const port = 3000;
 
 async function update(response, name, value) {
     try {
-        const runs = await db.load(name);
+      let runs;
+        try{
+          runs = await db.load(name);
+        }catch(e){
+          await db.save("runs",[]);
+        }
         runs.data.push(value);
-        db.modify(runs)
-        response.writeHead(200/headerFields);
+        await db.modify(runs)
+        console.log(runs.data)
+        response.writeHead(200,headerFields);
         response.end();
     }
     catch(e) {
-        response.writeHead(404/headerFields);
+        response.writeHead(404,headerFields);
+        console.log("here")
+        console.log(e)
         response.end();
     }
 }
 
+// async function 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,15 +46,17 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client','home', 'index.html'));
 });
 
+app.route('/update').put(async (request, response) => {
+  const options = request.query;
+  await update(response, options.name, options.value);
+})
+
 app.route("*").all(async (request, response) => {
     response.status(404).send(`Not found: ${request.path}`);  
 });
+
+
   
 app.listen(port, () => {
     console.log("listening on port " + port);
 });
-
-app.route('/update').put(async (request, response) => {
-    const options = request.query;
-    update(response, options.name, options.value);
-})
