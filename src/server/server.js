@@ -15,7 +15,7 @@ async function update(response, name, value) {
         try{
           runs = await db.load(name);
         }catch(e){
-          await db.save("runs",[]);
+          await db.save(name,[]);
         }
         runs.data.push(value);
         await db.modify(runs)
