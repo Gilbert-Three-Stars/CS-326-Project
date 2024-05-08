@@ -5,8 +5,8 @@
 */
 async function loadStats(){
     const statsLabel = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
-    const data = await db.load("runs");
-    const runs = data.data;
+    await fetch(`localhost:3000/read?name=$runs`,{method: "GET"});
+    const runs = await response.text();
 
     let runTime = 0;
     let topSpeed = 0;
@@ -70,7 +70,6 @@ function createChart(id,chartType, data, label){
     charts[id] = chart;
 }
 async function reloadCharts(timePeriod){
-    // const runs = await db.load("runs");
     await fetch(`localhost:3000/read?name=$runs`,{method: "GET"});
     const runs = await response.text();
     const data = parseData(runs.data,timePeriod);
@@ -146,7 +145,6 @@ let runs = [
 
 
 let charts = {};
-let db = new UserDB();
 loadStats();
 reloadCharts("all");
 

@@ -33,7 +33,7 @@ async function read(response, name){
   try{
     const runs = await db.load(name);
     response.writeHead(200, headerFields);
-    response.end(runs);
+    response.end(runs.data);
   }catch(e){
     response.writeHead(404,headerFields);
     response.end();
