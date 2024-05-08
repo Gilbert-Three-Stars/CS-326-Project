@@ -11,7 +11,7 @@ const port = 3000;
 
 async function create(response, name, value){
   try {
-      await db.save(name,value);
+      await db.save(name,JSON.parse(value));
       response.writeHead(200,headerFields);
       response.end();
   }
