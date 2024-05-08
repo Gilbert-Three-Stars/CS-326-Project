@@ -14,7 +14,7 @@ async function createData() {
         alert("Name/Input is required!");
     }else{
         try{
-            await fetch(`${url}/create?name=${nameInput.value}&value=${dataInput.value}`,{method: "POST"});
+            await fetch(`${url}/create?name=${nameInput.value}&value=${JSON.stringify(dataInput.value)}`,{method: "POST"});
         }catch(error){
             alert("Either duplicate creation or not valid data");
         }
@@ -41,7 +41,7 @@ async function updateData() {
         alert("Name/Input is required!");
     }else{
         try{
-            await fetch(`${url}/update?name=${nameInput.value}&value=${dataInput.value}`,{method: "PUT"});
+            await fetch(`${url}/update?name=${nameInput.value}&value=${JSON.stringify(dataInput.value)}`,{method: "PUT"});
         }catch(error){
             alert("Not valid data");
         }
@@ -55,7 +55,7 @@ async function deleteData() {
         alert("Name is required!");
     }else{
         try{
-            await fetch(`${url}/delete?name=${nameInput.value}`,{method:"DELELTE"})
+            await fetch(`${url}/delete?name=${nameInput.value}`,{method:"DELETE"})
             //localhost:3000/delete?name=test
         }catch(error){}
         viewAll();

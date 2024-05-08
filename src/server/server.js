@@ -29,12 +29,13 @@ async function update(response, name, value) {
         }catch(e){
           await db.save(name,[]);
         }
-        runs.data.push(value);
+        runs.data.push(JSON.parse(value));
         await db.modify(runs)
         response.writeHead(200,headerFields);
         response.end();
     }
     catch(e) {
+        console.log(e);
         response.writeHead(404,headerFields);
         response.end();
     }
@@ -44,7 +45,7 @@ async function read(response, name){
   try{
     const runs = await db.load(name);
     response.writeHead(200, headerFields);
-    response.write(runs.data)
+    response.write(JSON.stringify(runs.data))
     response.end();
   }catch(e){
     response.writeHead(404,headerFields);

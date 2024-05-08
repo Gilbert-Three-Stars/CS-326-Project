@@ -27,7 +27,13 @@ restartBtn.addEventListener('click', async() => {
 let mistakeMade = 0
 let startTime;
 let wordCount = 0; 
-let keyMistakes = {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0,I:0,J:0,K:0,L:0,M:0,N:0,O:0,P:0,Q:0,R:0,S:0,T:0,U:0,V:0,W:0,X:0,Y:0,Z:0};
+let keyMistakes = {
+    "A": 0, "B": 0, "C": 0, "D": 0, "E": 0,
+    "F": 0, "G": 0, "H": 0, "I": 0, "J": 0,
+    "K": 0, "L": 0, "M": 0, "N": 0, "O": 0,
+    "P": 0, "Q": 0, "R": 0, "S": 0, "T": 0,
+    "U": 0, "V": 0, "W": 0, "X": 0, "Y": 0, "Z": 0
+};
 function gameRunning(event){
     //tracks mistakes
     if(!timerRunning){
@@ -123,14 +129,15 @@ async function winGame(){
     const currentDate = new Date();
     const entry = textEntry.textContent.trim();
     const run = {
-        wpm: getWPM(entry),
-        acc: getAccuracy(entry),
-        keyMistakes: keyMistakes,
-        time: currentDate,
-        runTime: (180-sec) % 60,
-        quote: quote
+        "wpm": getWPM(entry),
+        "acc": getAccuracy(entry),
+        "keyMistakes": keyMistakes,
+        "time": currentDate.toISOString(),
+        "runTime": (180-sec) % 60,
+        "quote": quote
     };
-    await fetch(`localhost:3000/update?name=runs&value=${run}`,{method: "PUT"});
+    const runJsonString = JSON.stringify(run)
+    await fetch(`http://localhost:3000/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
