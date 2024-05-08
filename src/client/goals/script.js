@@ -34,7 +34,9 @@ enterGoalButton.addEventListener("click",async()=>{
 
 //This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
 processResButton.addEventListener("click", async () => {
-    const runs = await fetch(`localhost:3000/read?name=runs`,{method: "GET"});
+    let runs = await fetch(`localhost:3000/read?name=runs`,{method: "GET"});
+    runs = JSON.parse(await runs.text())
+    runs = runs.data;
     let runTime = 0;
     let topSpeed = 0;
     let totalSpeed = 0;

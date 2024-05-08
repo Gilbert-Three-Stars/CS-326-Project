@@ -138,6 +138,36 @@ async function winGame(){
     };
     const runJsonString = JSON.stringify(run)
     await fetch(`http://localhost:3000/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
+    // check for completed goals
+    let goals;
+    try {
+        goals = await fetch(`http://localhost:3000/read?name=goals`,{method: "GET"});
+        goals = JSON.parse(await goals.text());
+        goals = goals.data
+    }
+    catch(e) {
+        goals = []
+    }
+    let runs;
+    try {
+        runs = await fetch(`http://localhost:3000/read?name=runs`,{method: "GET"});
+        runs = JSON.parse(await runs.text())
+        runs = runs.data
+    }
+    catch(e) {
+        runs = []
+    }
+
+    for (let i = 0; i < goals.length; i++) {
+        let curTotal = 0
+        for (let j = 0; j < goals[i].numTexts; j++) {
+            curTotal += runs[runs.length-1-j].wpm;
+        }
+        if((curTotal/goals[i].numTexts) >= goals[i].wpm) { // this means they achieved the goal.
+            // need to update goals and send alert if user achieves a goal.
+            await fetch(`http://localhost:3000/delete?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "DELETE"})
+        }
+    }
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();

@@ -45,7 +45,7 @@ async function read(response, name){
   try{
     const runs = await db.load(name);
     response.writeHead(200, headerFields);
-    response.write(JSON.stringify(runs.data))
+    response.write(JSON.stringify(runs))
     response.end();
   }catch(e){
     response.writeHead(404,headerFields);
@@ -115,7 +115,7 @@ app
   .route("/delete")
   .delete(async (request, response) => {
     const options = request.query;
-    del(response, options.name);
+    await del(response, options.name);
   })
   // .all(methodNotAllowedHandler);
 app
