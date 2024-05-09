@@ -137,4 +137,21 @@ async function viewAll() {
     }catch(error){}
 }
 
+async function loadGoals() {
+    try {
+        let goals = await fetch(`http://localhost:3000/read?name=goals`,{method: "GET"});
+        goals = JSON.parse(await goals.text())
+        goals = goals.data;
+        for(let i= 0; i < goals.length; i++) {
+            let curGoal = document.createElement('div');
+            curGoal.textContent = `Type ${goals[i].wpm} words per minute over a span of ${goals[i].numTexts} text(s)`;
+            currentGoals.appendChild(curGoal);
+        }
+    }
+    catch{
+        console.log('error loading goals')
+    }
+}
+
+loadGoals();
 viewAll();
