@@ -11,7 +11,7 @@ const textInput = document.getElementById("nt");
 const enterGoalButton = document.getElementById("enterGB");
 const currentGoals = document.getElementById("current-goals");
 const previousGoal = document.getElementById("previous-goal");
-const processResButton = document.getElementById("processRes");
+const clearGoalsButton = document.getElementById("processRes");
 
 //uploads user inputted goal to current goal upon clicking enter goal button
 enterGoalButton.addEventListener("click",async()=>{
@@ -33,55 +33,14 @@ enterGoalButton.addEventListener("click",async()=>{
 });
 
 //This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
-processResButton.addEventListener("click", async () => {
-    let runs = await fetch(`http://localhost:3000/read?name=runs`,{method: "GET"});
-    runs = JSON.parse(await runs.text())
-    runs = runs.data;
-    let runTime = 0;
-    let topSpeed = 0;
-    let totalSpeed = 0;
-    let topAcc = 0;
-    let totalAcc = 0;
-    let numRuns = 0;
-    runs.forEach(run =>{
-        runTime+=run.runTime;
-        totalSpeed+=run.wpm;
-        totalAcc+=parseFloat(run.acc);
-        numRuns++;
-        if(run.wpm>topSpeed) topSpeed=run.wpm;
-        if(run.acc>topAcc) topAcc=run.acc;
-    });
-    //calculates average speed (words per minute over number of texts)
-    let avg = totalSpeed/numRuns;
-
-    const wpmGoalData = await db.load("wpmGoals");
-    const textGoalData = await db.load("textGoals");
-
-    const wpmGoal = wpmGoalData.data;
-    const textGoal = textGoalData.data;
-        if((avg >= wpmGoal) && (numRuns >= textGoal)){
-            //current goal has been achieved
-            try{
-                try{
-                    await db.save("prevWpmGoals", wpmGoal);
-                    await db.save("prevTextGoals", textGoal);
-                }
-                catch(err){
-                    await updateData("prevWpmGoals", wpmGoal);
-                    await updateData("prevTextGoals", textGoal);
-                }
-                await db.delete("wpmGoals");
-                await db.delete("textGoals");
-                currentGoal.innerHTML = "";
-            }
-            catch(error){
-                alert("something is wrong");
-            }
-        }
-        else{
-            alert("goal not met");
-        }
-    viewAll();
+clearGoalsButton.addEventListener("click", async () => {
+    // first, delete goals from the storage
+    await fetch(`http://localhost:3000/delete?name=goals`, {method: 'DELETE'});
+    // create an empty goals array
+    let goals = [];
+    await fetch(`http://localhost:3000/create?name=goals&value=${goals}`, {method: 'POST'});
+    // then, clear all the elements from index.html
+    await loadGoals();
 });
 
 
