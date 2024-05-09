@@ -165,7 +165,8 @@ async function winGame(){
         }
         if((curTotal/goals[i].numTexts) >= goals[i].wpm) { // this means they achieved the goal.
             // need to update goals and send alert if user achieves a goal.
-            await fetch(`http://localhost:3000/delete?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "DELETE"})
+            alert(`You have succeeded in typing ${goals[i].wpm} wpm over ${goals[i].numTexts} texts`);
+            await fetch(`http://localhost:3000/deleteEntry?name=goals&index=${i}`,{method: "PUT"});
         }
     }
 }

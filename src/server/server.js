@@ -79,6 +79,20 @@ async function viewAll(response){
     response.end();
   }
 }
+async function deleteEntry(response, name, index) {
+  try {
+    let data = await db.load(name);
+    data.data.splice(index, 1);
+    await db.modify(data);
+    response.writeHead(200,headerFields);
+    response.end();
+  }
+  catch(e){
+    console.log(e)
+    response.writeHead(404, headerFields);
+    response.end();
+  }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -122,6 +136,12 @@ app
   .route("/all")
   .get(async (request, response) => {
     viewAll(response);
+  })
+app
+  .route("/deleteEntry")
+  .put(async (request, response) => {
+    const options = request.query;
+    await deleteEntry(response, request.name, request.index)
   })
 
 
