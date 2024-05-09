@@ -26,7 +26,7 @@ enterGoalButton.addEventListener("click",async()=>{
     }
 
     let curGoal = JSON.stringify({'wpm': wpmInput.value, 'numTexts': textInput.value});
-    await fetch(`localhost:3000/update?name=goals&value=${encodedURIComponent(curGoal)}`,{method: "PUT"}); // add it to the goals in database
+    await fetch(`http://localhost:3000/update?name=goals&value=${encodeURIComponent(curGoal)}`,{method: "PUT"}); // add it to the goals in database
     let newGoal = document.createElement('div');
     newGoal.textContent = `Type ${wpmInput.value} words per minute over a span of ${textInput.value} text(s)`;
     currentGoals.appendChild(newGoal);
@@ -34,7 +34,7 @@ enterGoalButton.addEventListener("click",async()=>{
 
 //This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
 processResButton.addEventListener("click", async () => {
-    let runs = await fetch(`localhost:3000/read?name=runs`,{method: "GET"});
+    let runs = await fetch(`http://localhost:3000/read?name=runs`,{method: "GET"});
     runs = JSON.parse(await runs.text())
     runs = runs.data;
     let runTime = 0;
