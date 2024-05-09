@@ -35,6 +35,7 @@ async function update(response, name, value) {
         response.end();
     }
     catch(e) {
+        console.log(e);
         response.writeHead(404,headerFields);
         response.end();
     }
@@ -44,7 +45,7 @@ async function read(response, name){
   try{
     const runs = await db.load(name);
     response.writeHead(200, headerFields);
-    response.write(JSON.stringify(runs.data))
+    response.write(JSON.stringify(runs))
     response.end();
   }catch(e){
     response.writeHead(404,headerFields);

@@ -148,8 +148,7 @@ async function loadGoals() {
             currentGoals.appendChild(curGoal);
         }
     }
-    catch(e){
-        console.log(e)
+    catch{
         console.log('error loading goals')
     }
 }
