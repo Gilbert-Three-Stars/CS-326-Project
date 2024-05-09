@@ -140,7 +140,7 @@ app
   .route("/deleteEntry")
   .put(async (request, response) => {
     const options = request.query;
-    await deleteEntry(response, options.name, options.index)
+    await deleteEntry(response, request.name, request.index)
   })
 
 
