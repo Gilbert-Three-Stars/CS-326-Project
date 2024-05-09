@@ -6,9 +6,8 @@ const url = 'http://localhost:3000'
 */
 async function loadStats(){
     const statsLabel = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
-    let runs = await fetch(`${url}/read?name=runs`,{method: "GET"});
-    runs = JSON.parse(await runs.text());
-    runs = runs.data
+    const response = await fetch(`${url}/read?name=runs`,{method: "GET"});
+    const runs = JSON.parse(await response.text());
 
     let runTime = 0;
     let topSpeed = 0;
@@ -72,9 +71,8 @@ function createChart(id,chartType, data, label){
     charts[id] = chart;
 }
 async function reloadCharts(timePeriod){
-    let runs = await fetch(`${url}/read?name=runs`,{method: "GET"});
-    runs = JSON.parse(await runs.text());
-    runs = runs.data
+    const response = await fetch(`${url}/read?name=runs`,{method: "GET"});
+    const runs = JSON.parse(await response.text());
     const data = parseData(runs,timePeriod);
     if(charts["wpm"]) charts["wpm"].destroy();
     if(charts["acc"]) charts["acc"].destroy();
