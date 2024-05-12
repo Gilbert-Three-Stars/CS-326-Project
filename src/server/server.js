@@ -27,7 +27,9 @@ async function update(response, name, value) {
         try{
           runs = await db.load(name);
         }catch(e){
+          console.log("IN UPDATE FUNCTION   " + name)
           await db.save(name,[]);
+          runs = await db.load(name);
         }
         runs.data.push(JSON.parse(value));
         await db.modify(runs)
@@ -81,8 +83,12 @@ async function viewAll(response){
 }
 async function deleteEntry(response, name, index) {
   try {
+    console.log('IN DELETE ENTRY ')
     let data = await db.load(name);
-    data.data.splice(index, 1);
+    let i = JSON.parse(index);
+    console.log("BEFORE: " + JSON.stringify(data))
+    data.data.splice(i, 1);
+    console.log("AFTER: " + JSON.stringify(data))
     await db.modify(data);
     response.writeHead(200,headerFields);
     response.end();
@@ -141,7 +147,7 @@ app
   .route("/deleteEntry")
   .put(async (request, response) => {
     const options = request.query;
-    await deleteEntry(response, request.name, request.index)
+    await deleteEntry(response, options.name, options.index)
   })
 
 

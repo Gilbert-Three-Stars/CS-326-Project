@@ -34,6 +34,10 @@ enterGoalButton.addEventListener("click",async()=>{
 
 //This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
 processResButton.addEventListener("click", async () => {
+    await fetch(`http://localhost:3000/delete?name=goals`, {method: "DELETE"});
+    loadGoals();
+
+    /*
     let runs = await fetch(`http://localhost:3000/read?name=runs`,{method: "GET"});
     runs = JSON.parse(await runs.text())
     runs = runs.data;
@@ -81,10 +85,10 @@ processResButton.addEventListener("click", async () => {
         else{
             alert("goal not met");
         }
-    viewAll();
+    viewAll(); */
 });
 
-
+/*
 async function createData(name,data) {
     if(!name || !data){
         alert("Name/Input is required!");
@@ -115,7 +119,7 @@ async function updateData(name,newData) {
         viewAll();
     }
 
-}
+} */
 
 async function viewAll() {
     try{
@@ -139,6 +143,7 @@ async function viewAll() {
 
 async function loadGoals() {
     try {
+        currentGoals.textContent = '';
         let goals = await fetch(`http://localhost:3000/read?name=goals`,{method: "GET"});
         goals = JSON.parse(await goals.text())
         goals = goals.data;
@@ -150,6 +155,22 @@ async function loadGoals() {
     }
     catch{
         console.log('error loading goals')
+        currentGoals.textContent = '';
+
+    }
+    try {
+        let prevGoals = await fetch(`http://localhost:3000/read?name=prevGoals`, {method: "GET"});
+        prevGoals = JSON.parse(await prevGoals.text());
+        prevGoals = prevGoals.data;
+        for(let i = 0; i < prevGoals.length; i++) {
+            let curPrevGoal = document.createElement('div');
+            curPrevGoal.textContent = `You succeeded in typing ${prevGoals[i].wpm} words per minute over a span of ${prevGoals[i].numTexts} text(s)`
+            previousGoal.appendChild(curPrevGoal)
+        }
+    }
+    catch {
+        console.log('error loading previous goals')
+        previousGoal.textContent = ''
     }
 }
 

@@ -157,18 +157,21 @@ async function winGame(){
     catch(e) {
         runs = []
     }
-
     for (let i = 0; i < goals.length; i++) {
         let curTotal = 0
         for (let j = 0; j < goals[i].numTexts; j++) {
             curTotal += runs[runs.length-1-j].wpm;
         }
-        if((curTotal/goals[i].numTexts) >= goals[i].wpm) { // this means they achieved the goal.
+        let test1 = (curTotal/parseInt(goals[i].numTexts))
+        let test2 = parseInt(goals[i].wpm)
+        
+        if((curTotal/parseInt(goals[i].numTexts)) >= parseInt(goals[i].wpm)) { // this means they achieved the goal.
             // need to update goals and send alert if user achieves a goal.
             alert(`You have succeeded in typing ${goals[i].wpm} wpm over ${goals[i].numTexts} texts`);
-            await fetch(`http://localhost:3000/deleteEntry?name=goals&index=${i}`,{method: "PUT"});
+            await fetch(`http://localhost:3000/update?name=prevGoals&value=${encodeURIComponent(JSON.stringify(goals[i]))}`,{method: "PUT"});
+            await fetch(`http://localhost:3000/deleteEntry?name=goals&index=${i}`, {method: "PUT"});
         }
-    }
+    } 
 }
 const response = await fetch("quotes.csv");
 const csvText = await response.text();
