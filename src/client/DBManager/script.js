@@ -9,6 +9,8 @@ const viewAllBtn = document.getElementById("viewAllBtn");
 const responseTextBox = document.getElementById("dataResponse");
 
 const url = 'http://localhost:3000'
+
+//function to handle data creation action
 async function createData() {
     if(!nameInput.value || !dataInput.value){
         alert("Name/Input is required!");
@@ -22,7 +24,7 @@ async function createData() {
     viewAll();
 }
 
-
+//function to read data action
 async function readData() {
     if(!nameInput.value){
         alert("Name is required!");
@@ -35,7 +37,7 @@ async function readData() {
     }
 }
 
-
+//function to update data
 async function updateData() {
     if(!nameInput.value|| !dataInput.value){
         alert("Name/Input is required!");
@@ -50,6 +52,7 @@ async function updateData() {
 
 }
 
+//function to delete data
 async function deleteData() {
     if(!nameInput.value){
         alert("Name is required!");
@@ -62,6 +65,7 @@ async function deleteData() {
     }
 }
 
+//function to display all the data
 async function viewAll() {
     try{
         const response = await fetch(`${url}/all`,{method:"GET"});

@@ -34,6 +34,10 @@ let keyMistakes = {
     "P": 0, "Q": 0, "R": 0, "S": 0, "T": 0,
     "U": 0, "V": 0, "W": 0, "X": 0, "Y": 0, "Z": 0
 };
+/**loads the graphs on the stats page
+@param {string} event - The type of data the chart should sho
+day, week, month, year, all
+*/
 function gameRunning(event){
     //tracks mistakes
     if(!timerRunning){
