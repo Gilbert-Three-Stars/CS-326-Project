@@ -1,6 +1,8 @@
-import * as db from './db.js'
-import express from "express"
-import path from "path"
+import * as db from './db.js';
+import express from "express";
+import path from "path";
+import fs from "fs";
+import csv from "csv-parser";
 import { fileURLToPath } from 'url';
 
 
@@ -36,6 +38,7 @@ async function update(response, name, value) {
     }
     catch(e) {
         console.log(e);
+        console.log(`name: ${name} and value: ${value}`)
         response.writeHead(404,headerFields);
         response.end();
     }
@@ -93,6 +96,37 @@ async function deleteEntry(response, name, index) {
     response.end();
   }
 }
+const text = await readCSVFile("../CS-326-Project/src/server/quotes.csv");
+async function getText(response){
+  try{
+    let randomIndex = Math.floor(Math.random() * text.length);
+    const quote = (text[randomIndex]);
+    response.writeHead(200,headerFields);
+    response.write(JSON.stringify(quote));
+    response.end()
+  }catch(e){
+    response.writeHead(400,headerFields);
+    response.end();
+  }
+}
+
+function readCSVFile(filePath) {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', (data) => {
+        results.push(data);
+      })
+      .on('end', () => {
+        resolve(results);
+      })
+      .on('error', (error) => {
+        reject(error);
+      });
+  });
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -124,6 +158,11 @@ app
   .get(async (request, response) => {
     const options = request.query;
     await read(response, options.name);
+  })
+app
+  .route('/text')
+  .get(async (request, response) => {
+    await getText(response);
   })
 app
   .route("/delete")
