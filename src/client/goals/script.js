@@ -1,10 +1,6 @@
-import {UserDB} from "../DBManager/UserDB.js";
 
-//This is the code from stats. you can change it accordingly to fit this page.
 
 //if you want to access any of the data you created. Go to website, then stats->admin
-
-let db = new UserDB();
 
 const wpmInput = document.getElementById("wpmGoal");
 const textInput = document.getElementById("nt");
