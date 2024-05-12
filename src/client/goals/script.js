@@ -16,6 +16,7 @@ const processResButton = document.getElementById("processRes");
 //uploads user inputted goal to current goal upon clicking enter goal button
 enterGoalButton.addEventListener("click",async()=>{
     // await createData("wpmGoals", wpmInput.value);
+    // need to specify both the words per minute and number of texts to create a valid goal
     if(!wpmInput.value) {
         alert("Please specify the desired words per minute")
         return;
@@ -32,118 +33,19 @@ enterGoalButton.addEventListener("click",async()=>{
     currentGoals.appendChild(newGoal);
 });
 
-//This is code to process data, checks to see if current data matches goal. Uploads current goal data to previous goal if goals are met
+//This button clears all of the current goals.
 processResButton.addEventListener("click", async () => {
     await fetch(`http://localhost:3000/delete?name=goals`, {method: "DELETE"});
     loadGoals();
-
-    /*
-    let runs = await fetch(`http://localhost:3000/read?name=runs`,{method: "GET"});
-    runs = JSON.parse(await runs.text())
-    runs = runs.data;
-    let runTime = 0;
-    let topSpeed = 0;
-    let totalSpeed = 0;
-    let topAcc = 0;
-    let totalAcc = 0;
-    let numRuns = 0;
-    runs.forEach(run =>{
-        runTime+=run.runTime;
-        totalSpeed+=run.wpm;
-        totalAcc+=parseFloat(run.acc);
-        numRuns++;
-        if(run.wpm>topSpeed) topSpeed=run.wpm;
-        if(run.acc>topAcc) topAcc=run.acc;
-    });
-    //calculates average speed (words per minute over number of texts)
-    let avg = totalSpeed/numRuns;
-
-    const wpmGoalData = await db.load("wpmGoals");
-    const textGoalData = await db.load("textGoals");
-
-    const wpmGoal = wpmGoalData.data;
-    const textGoal = textGoalData.data;
-        if((avg >= wpmGoal) && (numRuns >= textGoal)){
-            //current goal has been achieved
-            try{
-                try{
-                    await db.save("prevWpmGoals", wpmGoal);
-                    await db.save("prevTextGoals", textGoal);
-                }
-                catch(err){
-                    await updateData("prevWpmGoals", wpmGoal);
-                    await updateData("prevTextGoals", textGoal);
-                }
-                await db.delete("wpmGoals");
-                await db.delete("textGoals");
-                currentGoal.innerHTML = "";
-            }
-            catch(error){
-                alert("something is wrong");
-            }
-        }
-        else{
-            alert("goal not met");
-        }
-    viewAll(); */
 });
 
-/*
-async function createData(name,data) {
-    if(!name || !data){
-        alert("Name/Input is required!");
-    }else{
-        try{
-            await db.save(name, [JSON.parse(data)]);
-        }catch(error){
-            alert("Either duplicate creation or not valid data");
-            console.log(error)
-        }
-    }
-    viewAll();
-}
-
-
-async function updateData(name,newData) {
-    if(!name || !newData){
-        alert("Name/Input is required!");
-    }else{
-        try{
-            const data = await db.load(name);
-            data.data.push(JSON.parse(newData));
-            await db.modify(data);
-        }catch(error){
-            console.log(error.message);
-            alert("Not valid data");
-        }
-        viewAll();
-    }
-
-} */
-
-async function viewAll() {
-    try{
-        try{
-            let wpm = await db.load("wpmGoals");
-            currentGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
-            let texts = await db.load("textGoals");
-            currentGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
-        }
-        catch(err){
-            currentGoal.innerHTML = "You have no current goals, enter a goal!";
-        }
-        let prevWpm = await db.load("prevWpmGoals");
-        let prevTexts = await db.load("prevTextGoals");
-        previousGoal.innerHTML = `Here are your goals you passed:`;
-        for (let index = 0; index < prevWpm.data.length; index++) {
-            previousGoal.innerHTML += `<br>You achieved ${JSON.stringify(prevWpm.data[index])} words per minute average over ${JSON.stringify(prevTexts.data[index])} texts!`;
-        }
-    }catch(error){}
-}
-
+/**
+ * This function displays both the current goals and the previous goals in their respective areas.
+ */
 async function loadGoals() {
-    try {
-        currentGoals.textContent = '';
+    try { // this block is for loading current goals
+        currentGoals.textContent = ''; // clear the text content of the current goals
+        // then fetch the goals again after you clear it.
         let goals = await fetch(`http://localhost:3000/read?name=goals`,{method: "GET"});
         goals = JSON.parse(await goals.text())
         goals = goals.data;
@@ -153,12 +55,13 @@ async function loadGoals() {
             currentGoals.appendChild(curGoal);
         }
     }
-    catch{
+    catch{ // we want empty goals section if there is no entry for goals.
         console.log('error loading goals')
         currentGoals.textContent = '';
 
     }
-    try {
+    try { // this block is for loading previous goals.
+        previousGoal.textContent = '';
         let prevGoals = await fetch(`http://localhost:3000/read?name=prevGoals`, {method: "GET"});
         prevGoals = JSON.parse(await prevGoals.text());
         prevGoals = prevGoals.data;
@@ -175,4 +78,4 @@ async function loadGoals() {
 }
 
 loadGoals();
-viewAll();
+
