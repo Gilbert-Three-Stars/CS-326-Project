@@ -11,6 +11,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 3000;
 
+/**handles data creation in pouch DB
+ * 
+ * @param {Response} response 
+ * @param {string} name name of data
+ * @param {*} value data 
+ */
 async function create(response, name, value){
   try {
       await db.save(name,JSON.parse(value));
@@ -22,14 +28,17 @@ async function create(response, name, value){
       response.end();
   }
 }
-
+/**handles data update 
+ * @param {Response} response 
+ * @param {string} name naem of data
+ * @param {*} value data 
+ */
 async function update(response, name, value) {
     try {
       let runs;
         try{
           runs = await db.load(name);
         }catch(e){
-          console.log("IN UPDATE FUNCTION   " + name)
           await db.save(name,[]);
           runs = await db.load(name);
         }
@@ -40,12 +49,14 @@ async function update(response, name, value) {
     }
     catch(e) {
         console.log(e);
-        console.log(`name: ${name} and value: ${value}`)
         response.writeHead(404,headerFields);
         response.end();
     }
 }
-
+/**handles data reading. returns data 
+ * @param {Response} response 
+ * @param {string} name name of data
+ */
 async function read(response, name){
   try{
     const runs = await db.load(name);
@@ -57,6 +68,10 @@ async function read(response, name){
     response.end();
   }
 }
+/**handles deleting data.
+ * @param {Response} response 
+ * @param {string} name name of data
+ */
 async function del(response, name) {
   try {
       await db.del(name);
@@ -68,6 +83,9 @@ async function del(response, name) {
       response.end();
   }
 }
+/**gives string of all data values.
+ * @param {Response} response 
+ */
 async function viewAll(response){
   try{
     const result = await db.loadAll()
@@ -84,14 +102,16 @@ async function viewAll(response){
     response.end();
   }
 }
+/**deletes element of data value
+ * @param {Response} response 
+ * @param {string} name name of data
+ * @param {int} index index to delete
+ */
 async function deleteEntry(response, name, index) {
   try {
-    console.log('IN DELETE ENTRY ')
     let data = await db.load(name);
     let i = JSON.parse(index);
-    console.log("BEFORE: " + JSON.stringify(data))
     data.data.splice(i, 1);
-    console.log("AFTER: " + JSON.stringify(data))
     await db.modify(data);
     response.writeHead(200,headerFields);
     response.end();
@@ -102,6 +122,9 @@ async function deleteEntry(response, name, index) {
     response.end();
   }
 }
+/**returns an entry in the database.
+ * @param {Response} response 
+ */
 const text = await readCSVFile("../CS-326-Project/src/server/quotes.csv");
 async function getText(response){
   try{
@@ -115,7 +138,9 @@ async function getText(response){
     response.end();
   }
 }
-
+/**loads database.
+ * @param {string} filePath path to database
+ */
 function readCSVFile(filePath) {
   return new Promise((resolve, reject) => {
     const results = [];
@@ -147,52 +172,65 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client','home', 'index.html'));
 });
 
+
+const methodNotAllowedHandler = async (request, response) => {
+  response.status(405).type('text/plain').send('Method Not Allowed');
+};
+
 app
   .route('/create')
   .post(async (request, response) => {
     const options = request.query;
     await create(response, options.name, options.value);
   })
+  .all(methodNotAllowedHandler);
 app
   .route('/update')
   .put(async (request, response) => {
     const options = request.query;
     await update(response, options.name, options.value);
   })
+  .all(methodNotAllowedHandler);
 app
   .route('/read')
   .get(async (request, response) => {
     const options = request.query;
     await read(response, options.name);
   })
+  .all(methodNotAllowedHandler);
 app
   .route('/text')
   .get(async (request, response) => {
     await getText(response);
   })
+  .all(methodNotAllowedHandler);
 app
   .route("/delete")
   .delete(async (request, response) => {
     const options = request.query;
     await del(response, options.name);
   })
-  // .all(methodNotAllowedHandler);
+  .all(methodNotAllowedHandler);
 app
   .route("/all")
   .get(async (request, response) => {
     viewAll(response);
   })
+  .all(methodNotAllowedHandler);
 app
   .route("/deleteEntry")
   .put(async (request, response) => {
     const options = request.query;
     await deleteEntry(response, options.name, options.index)
   })
+  .all(methodNotAllowedHandler);
 
 
-app.route("*").all(async (request, response) => {
-    response.status(404).send(`Not found: ${request.path}`);  
-});
+app.route("*")
+.all(async (request, response) => {
+      response.status(404).send(`Not found: ${request.path}`);  
+})
+.all(methodNotAllowedHandler);
 
 
   
