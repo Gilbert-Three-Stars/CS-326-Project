@@ -1,5 +1,4 @@
-import {UserDB} from "../DBManager/UserDB.js";
-const db = new UserDB();
+
 
 const quoteText = document.getElementById('quote-text');
 const textEntry = document.querySelector('.text-entry');
@@ -11,6 +10,7 @@ const creditsDisplay = document.getElementById("credits");
 const newTextBtn = document.getElementById("new-text");
 const restartBtn = document.getElementById('restart');
 
+const url = "http://localhost:3000";
 
 //disables pasting
 textEntry.addEventListener('paste', (event) => {
@@ -28,7 +28,16 @@ restartBtn.addEventListener('click', async() => {
 let mistakeMade = 0
 let startTime;
 let wordCount = 0; 
-let keyMistakes = {A:0,B:0,C:0,D:0,E:0,F:0,G:0,H:0,I:0,J:0,K:0,L:0,M:0,N:0,O:0,P:0,Q:0,R:0,S:0,T:0,U:0,V:0,W:0,X:0,Y:0,Z:0};
+let keyMistakes = {
+    "A": 0, "B": 0, "C": 0, "D": 0, "E": 0,
+    "F": 0, "G": 0, "H": 0, "I": 0, "J": 0,
+    "K": 0, "L": 0, "M": 0, "N": 0, "O": 0,
+    "P": 0, "Q": 0, "R": 0, "S": 0, "T": 0,
+    "U": 0, "V": 0, "W": 0, "X": 0, "Y": 0, "Z": 0
+};
+/**function that runs when the user is typing
+@param {Event} event - user action
+*/
 function gameRunning(event){
     //tracks mistakes
     if(!timerRunning){
@@ -73,20 +82,30 @@ function gameRunning(event){
     accuracyDisplay.textContent = `Accuracy: ${getAccuracy(entry)}%`;
     wpmDisplay.textContent = `WPM: ${getWPM(entry)}`;
 }
+/**get accuracy of user
+@param {string} entry - text user is typing
+@returns {float} the accuracy of the user
+*/
 function getAccuracy(entry){
     const accuracy = Math.max(0, ((entry.length - mistakeMade) / entry.length) * 100);
     return accuracy.toFixed(2);
 }
+/**get words per minute of user
+@param {string} entry - text user is typing
+@returns {int} the wpm of the user
+*/
 function getWPM(entry){
     const words = entry.split(/\s+/);
     wordCount = words.length;
     const timeElapsed = (Date.now() - startTime) / (1000 * 60);
     return Math.round(wordCount / timeElapsed);
 }
+
+// purpose of the startTime and stopTime functions are to track WPM
 let timer;
 let sec = 180;
 let timerRunning = false;
-function startTimer(){ // purpose of the startTime and stopTime functions are to track WPM
+function startTimer(){ 
     timerRunning = true;
     timeDisplay.style.display = 'block';
     timer = setInterval(()=>{
@@ -105,12 +124,15 @@ function stopTimer(){
     sec = 180;
     timerRunning = false;
 }
+/**function to handle when the game ends
+@param {boolean} won - boolean of whether the user wins or not
+*/
 function endGame(won){
     //lock text box
     textEntry.contentEditable = false;
     textEntry.blur();
     //display end game stats: credits and time
-    creditsDisplay.innerHTML = `By: ${quote[1]}`;
+    creditsDisplay.innerHTML = `By: ${textQuote["author"]}`;
     const minutes = Math.floor((180-sec) / 60);
     let remainingSeconds = (180-sec) % 60;
     if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
@@ -120,34 +142,74 @@ function endGame(won){
     if(won) winGame();
     stopTimer();
 }
+/**function to handle the user winning
+ */
 async function winGame(){
     const currentDate = new Date();
     const entry = textEntry.textContent.trim();
     const run = {
-        wpm: getWPM(entry),
-        acc: getAccuracy(entry),
-        keyMistakes: keyMistakes,
-        time: currentDate,
-        runTime: (180-sec) % 60,
-        quote: quote
+        "wpm": getWPM(entry),
+        "acc": getAccuracy(entry),
+        "keyMistakes": keyMistakes,
+        "time": currentDate.toISOString(),
+        "runTime": (180-sec) % 60,
+        "quote": textQuote
     };
-    let runs = await db.load("runs"); // adding the data of the typing run to the database.
-    runs["data"].push(run);
-    db.modify(runs);
+    const runJsonString = JSON.stringify(run)
+    await fetch(`${url}/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
 }
-const response = await fetch("quotes.csv");
-const csvText = await response.text();
-const parsedText = Papa.parse(csvText).data;
-let quote;
+
+/**after completing a run, check whether any goals have been completed
+ */
+async function checkGoals(){
+    let goals;
+    try {
+        goals = await fetch(`${url}/read?name=goals`,{method: "GET"});
+        goals = JSON.parse(await goals.text());
+        goals = goals.data
+    }
+    catch(e) {
+        goals = []
+    }
+    let runs;
+    try {
+        runs = await fetch(`${url}/read?name=runs`,{method: "GET"});
+        runs = JSON.parse(await runs.text())
+        runs = runs.data
+    }
+    catch(e) {
+        runs = []
+    }
+    for (let i = 0; i < goals.length; i++) {
+        let curTotal = 0
+        for (let j = 0; j < goals[i].numTexts; j++) {
+            curTotal += runs[runs.length-1-j].wpm;
+        }
+        
+        if((curTotal/parseInt(goals[i].numTexts)) >= parseInt(goals[i].wpm)) { // this means they achieved the goal.
+            // need to update goals and send alert if user achieves a goal.
+            alert(`You have succeeded in typing ${goals[i].wpm} wpm over ${goals[i].numTexts} texts`);
+            await fetch(`http://localhost:3000/update?name=prevGoals&value=${encodeURIComponent(JSON.stringify(goals[i]))}`,{method: "PUT"});
+            await fetch(`http://localhost:3000/deleteEntry?name=goals&index=${i}`, {method: "PUT"});
+        }
+    } 
+}
+
+let textQuote;
+/**function to start the game,
+ * generates a random text to type
+ */
 async function startRound(){
     try{
-        let randomIndex = Math.floor(Math.random() * parsedText.length);
-        quote = parsedText[randomIndex];
-        quoteText.innerText = quote[0];
+        const response = await fetch(`${url}/text`,{method: "GET"});
+        textQuote = JSON.parse(await response.text());
+        quoteText.innerText = textQuote["quote"];
     }catch(error){console.log(error)}
     restart();
 }
-
+/**function that resets the game
+ * 
+ */
 function restart(){
     stopTimer();
     document.getElementById("endgame-stats-display").style.display = 'none';
@@ -163,7 +225,7 @@ function restart(){
 
 
 startRound();
-db.load("runs").catch(err=>db.save("runs",[]));
+
 
 
 

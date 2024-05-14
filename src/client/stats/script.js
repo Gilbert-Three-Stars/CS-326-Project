@@ -1,13 +1,14 @@
-import {UserDB} from "../DBManager/UserDB.js";
 
-/**loads the stats on the stats page
-@param {Element} element - The DOM element to render the stats. 
-*/
+const url = 'http://localhost:3000'
+
+//loads the stats on the stats page
 async function loadStats(){
     const statsLabel = ["time","runs","top-speed","avg-speed","top-acc","avg-acc"];
-    const data = await db.load("runs");
-    const runs = data.data;
+    const response = await fetch(`${url}/read?name=runs`,{method: "GET"});
+    let runs = JSON.parse(await response.text());
+    runs = runs.data;
 
+    //look through the data
     let runTime = 0;
     let topSpeed = 0;
     let totalSpeed = 0;
@@ -21,6 +22,7 @@ async function loadStats(){
         if(parseFloat(run.acc) >topAcc) topAcc=parseFloat(run.acc);
     });
 
+    //display the data
     const minutes = Math.floor(runTime / 60);
     let remainingSeconds = runTime % 60;
     if(remainingSeconds<10) remainingSeconds= "0"+remainingSeconds;
@@ -35,7 +37,6 @@ async function loadStats(){
 /**loads the graphs on the stats page
 @param {string} id - The id of the chart DOM element to render the charts
 @param {string} chartType - the type of chart to make
-@param {string} chartTime - the time range of the data
 @param {object} data - the data of the charts
 */
 function createChart(id,chartType, data, label){
@@ -69,9 +70,16 @@ function createChart(id,chartType, data, label){
     });
     charts[id] = chart;
 }
+
+/**loads the graphs on the stats page
+@param {string} timePeriod - The type of data the chart should sho
+day, week, month, year, all
+*/
 async function reloadCharts(timePeriod){
-    const runs = await db.load("runs");
-    const data = parseData(runs.data,timePeriod);
+    const response = await fetch(`${url}/read?name=runs`,{method: "GET"});
+    let runs = JSON.parse(await response.text());
+    runs = runs.data;
+    const data = parseData(runs,timePeriod);
     if(charts["wpm"]) charts["wpm"].destroy();
     if(charts["acc"]) charts["acc"].destroy();
     if(charts["keys"]) charts["keys"].destroy();
@@ -81,6 +89,12 @@ async function reloadCharts(timePeriod){
 }
 
 const dateToMonth = {0:"Jan",1:"Feb",2:"Mar",3:"Apr",4:"May",5:"Jun",6:"Jul",7:"Aug",8:"Sep",9:"Oct",10:"Nov",11:"Dec"}
+/**turns runs into an array that can be read by Chart JS
+@param {Array<object>} runs - an array containing all the runs the user has done
+@param {string} timePeriod - The type of data the chart should show
+day, week, month, year, all
+@returns {Array<object>} an array that can be read by Chart JS. [wpm,acc,label]
+*/
 function parseData(runs, timePeriod){
     let endDate = calculateDate(timePeriod);
     let labels = []
@@ -113,7 +127,11 @@ function parseData(runs, timePeriod){
       ];
     return [wpm, acc, {labels:abc,data:keys}];
 }
-
+/**calculates the time range of the chart
+@param {string} time - the type of data the chart should show
+day, week, month, year, all 
+@returns {Data} represents the first time index of the chart
+*/
 function calculateDate(time){
     let currentDate = new Date();
     if(time === "day")
@@ -144,7 +162,6 @@ let runs = [
 
 
 let charts = {};
-let db = new UserDB();
 loadStats();
 reloadCharts("all");
 
