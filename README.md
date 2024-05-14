@@ -11,4 +11,6 @@ set goals for themselves in the pursuit of improved typing.
 
 ## Navigation Details
 
-Our project is housed inside of src/client. For each webpage, we have a separate folder that is titled with the main purpose of that webpage. Our four main pages are the home page, in the folder titled 'home', the page where you type the text, in the folder titled 'play', the page in which you view your stats, in the folder titled 'stats', and the page in which you set and view goals, in the folder titled 'goals'. Within each folder, we have the JavaScript, HTML, and CSS files for that specific page.
+The frontend of our project is housed inside of src/client. For each webpage, we have a separate folder that is titled with the main purpose of that webpage. Our four main pages are the home page, in the folder titled 'home', the page where you type the text, in the folder titled 'play', the page in which you view your stats, in the folder titled 'stats', and the page in which you set and view goals, in the folder titled 'goals'. Within each folder, we have the JavaScript, HTML, and CSS files for that specific page.
+
+The backend of our project is inside of src/server. We have two separate JavaScript files - one for the functions that connect to the server, titled 'server.js', and one for the database operation functions, titled 'db.js'. Additionally, the quotes that we're using for our project are stored in a csv file inside of the src/server directory.
