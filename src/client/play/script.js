@@ -157,6 +157,7 @@ async function winGame(){
     };
     const runJsonString = JSON.stringify(run)
     await fetch(`${url}/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
+    checkGoals();
 }
 
 /**after completing a run, check whether any goals have been completed
