@@ -157,7 +157,11 @@ async function winGame(){
     };
     const runJsonString = JSON.stringify(run)
     await fetch(`${url}/update?name=runs&value=${encodeURIComponent(runJsonString)}`,{method: "PUT"});
-    // check for completed goals
+}
+
+/**after completing a run, check whether any goals have been completed
+ */
+async function checkGoals(){
     let goals;
     try {
         goals = await fetch(`${url}/read?name=goals`,{method: "GET"});
@@ -181,8 +185,6 @@ async function winGame(){
         for (let j = 0; j < goals[i].numTexts; j++) {
             curTotal += runs[runs.length-1-j].wpm;
         }
-        let test1 = (curTotal/parseInt(goals[i].numTexts))
-        let test2 = parseInt(goals[i].wpm)
         
         if((curTotal/parseInt(goals[i].numTexts)) >= parseInt(goals[i].wpm)) { // this means they achieved the goal.
             // need to update goals and send alert if user achieves a goal.
