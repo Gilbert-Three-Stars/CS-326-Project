@@ -73,29 +73,5 @@ async function loadGoals() {
     }
 }
 
-<<<<<<< HEAD
-async function viewAll() {
-    try{
-        try{
-            let wpm = await db.load("wpmGoals");
-            currentGoal.innerHTML = `WPM Goals: ${JSON.stringify(wpm.data)}`;
-            let texts = await db.load("textGoals");
-            currentGoal.innerHTML += `<br>Text Goals: ${JSON.stringify(texts.data)}`;
-            //uploads current goals to html text.
-        }
-        catch(err){
-            currentGoal.innerHTML = "You have no current goals, enter a goal!";
-        }
-        let prevWpm = await db.load("prevWpmGoals");
-        let prevTexts = await db.load("prevTextGoals");
-        previousGoal.innerHTML = `Here are your goals you passed:`;
-        for (let index = 0; index < prevWpm.data.length; index++) {
-            previousGoal.innerHTML += `<br>You achieved ${JSON.stringify(prevWpm.data[index])} words per minute average over ${JSON.stringify(prevTexts.data[index])} texts!`;
-        }
-        //updates previous goals to html text.
-    }catch(error){}
-}
-=======
 loadGoals();
->>>>>>> 2a0cb8d2f3dce40c8bc3db0685d61d4e0ac2ef41
 
